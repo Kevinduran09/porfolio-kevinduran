@@ -46,31 +46,29 @@ const Personal_Information = {
         {Personal_Information.titles[0]}
       </div>
       <div
-        class="flex flex-row py-2 mt-6 items-center gap-5 justify-center md:justify-between"
+        class="flex flex-row py-2 mt-6 text-sm items-center gap-2 md:gap-3 justify-center md:justify-between"
       >
-        <div class="flex flex-row gap-3 items-center">
-          <a
-            href="https://github.com/Kevinduran09"
-            class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-4 py-2 rounded transition-colors"
-          >
-            <Github class="size-6" />
-            <span>GitHub</span>
-          </a>
-          <a
-            href={Personal_Information.linkedin}
-            class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-4 py-2 rounded transition-colors"
-          >
-            <LinkedIn class="size-6" />
-            <span>LinkedIn</span>
-          </a>
-          <a
-            href={`mailto:${Personal_Information.email}`}
-            class="bg-fuchsia-700 hover:bg-fuchsia-600 flex items-center gap-2 px-4 py-2 rounded transition-colors"
-          >
-            <span>Contactame</span>
-            <Mail class="size-6" />
-          </a>
-        </div>
+        <a
+          href="https://github.com/Kevinduran09"
+          class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
+        >
+          <Github class="size-5 md:size-6" />
+          <span>GitHub</span>
+        </a>
+        <a
+          href={Personal_Information.linkedin}
+          class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
+        >
+          <LinkedIn class="size-5 md:size-6" />
+          <span>LinkedIn</span>
+        </a>
+        <a
+          href={`mailto:${Personal_Information.email}`}
+          class="bg-fuchsia-700 hover:bg-fuchsia-600 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
+        >
+          <span>Contactame</span>
+          <Mail class="size-5 md:size-6" />
+        </a>
       </div>
     </div>
   </div>
