@@ -1,0 +1,58 @@
+---
+// CarruselTecnologias.astro
+import { getDuplicatedTechnologies } from "../data/technologies";
+
+const duplicatedTechs = getDuplicatedTechnologies();
+---
+
+<style>
+    .carousel-item {
+        transition:
+            transform 0.4s ease,
+            filter 0.4s ease;
+    }
+
+    .carousel-item:hover .tech-img {
+        filter: none;
+        transform: scale(1.08);
+        transition-delay: 0.1s;
+    }
+
+    .carousel-item:hover .tech-name {
+        color: var(--tech-color);
+    }
+</style>
+
+<div
+    class="relative w-full max-w-4xl overflow-hidden bg-gray-900 rounded-xl p-4 group shadow-lg"
+>
+    <div
+        class="flex animate-loop-scroll whitespace-nowrap group-hover:[animation-play-state:paused]"
+    >
+        {
+            duplicatedTechs.map((tech) => (
+                <div
+                    class="carousel-item flex flex-col items-center justify-center w-[120px] shrink-0 h-full transition-transform duration-300"
+                    title={tech.name}
+                    style={`--tech-color: ${tech.color};`}
+                >
+                    <a
+                        href={tech.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex flex-col items-center gap-1"
+                    >
+                        <img
+                            src={tech.icon}
+                            alt={tech.name}
+                            class="tech-img h-14 w-14 object-contain filter grayscale transition duration-300"
+                        />
+                        <span class="tech-name text-sm font-light transition-colors duration-300 text-white">
+                            {tech.name}
+                        </span>
+                    </a>
+                </div>
+            ))
+        }
+    </div>
+</div>

@@ -1,0 +1,51 @@
+---
+import { getDuplicatedTechnologies } from "../data/technologies";
+
+const duplicatedTechs = getDuplicatedTechnologies();
+---
+
+<div class="flex justify-center mt-10">
+    <div class="w-[700px] max-w-full overflow-hidden group">
+        <div
+            class="slider py-2 flex animate-loop-scroll whitespace-nowrap group-hover:[animation-play-state:paused]"
+        >
+            {
+                duplicatedTechs.map((tech) => (
+                    <div
+                        class="carousel-item flex flex-col items-center justify-center w-[120px] shrink-0 h-full"
+                        title={tech.name}
+                        style={`--tech-color: ${tech.color};`}
+                    >
+                        <a
+                            href={tech.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex flex-col items-center gap-1 group/item"
+                        >
+                            <img
+                                src={tech.icon}
+                                alt={tech.name}
+                                class="tech-img h-14 w-14 object-contain filter grayscale transition duration-300 group-hover/item:filter-none"
+                            />
+                            <span class="tech-name text-sm font-light transition-colors duration-300 text-white group-hover/item:text-[inherit]">
+                                {tech.name}
+                            </span>
+                        </a>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .carousel-item:hover .tech-img {
+        filter: none;
+        transform: scale(1.15);
+        transition-delay: 0.2s;
+    }
+    .carousel-item:hover .tech-name {
+        color: var(--tech-color);
+    }
+</style>
+

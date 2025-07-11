@@ -1,0 +1,72 @@
+---
+// Componente Contact básico
+const emailAdress = "kduran.091001@gmail.com";
+---
+
+<section class="mx-8 md:mx-36 my-16">
+  <div class="md:mx-80">
+    <div class="w-full text-center my-10">
+      <span class="text-4xl font-bold">
+        Si quieres saber mas de mi puedes contactarme!
+      </span>
+    </div>
+    <div class="flex flex-row gap-3 relative">
+      <div class="bg-gray-300 border-2 border-gray-500 rounded-lg p-2 w-full">
+        <span class="text-gray-950 font-medium">{emailAdress}</span>
+      </div>
+      <div class="relative">
+        <button
+          class="flex items-center gap-2 p-2 bg-fuchsia-600 rounded-lg cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 relative"
+          id="copy-button"
+          data-tooltip="¡Copiado!"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icon-tabler-copy"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path
+              d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"
+            ></path>
+            <path
+              d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"
+            ></path>
+          </svg>
+          Copiar
+        </button>
+        <div
+          id="tooltip"
+          class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded-md opacity-0 transition-opacity duration-300 pointer-events-none"
+        >
+          ¡Copiado!
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ emailAdress }}>
+  const button = document.querySelector("#copy-button");
+  const tooltip = document.querySelector("#tooltip");
+
+  if (button && tooltip) {
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(emailAdress);
+        tooltip.style.opacity = "1";
+        setTimeout(() => {
+          tooltip.style.opacity = "0";
+        }, 2000);
+      } catch (err) {
+        console.error("Error al copiar:", err);
+      }
+    });
+  }
+</script>

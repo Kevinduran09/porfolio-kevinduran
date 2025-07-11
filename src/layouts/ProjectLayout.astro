@@ -1,0 +1,23 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+---
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>Proyecto | Mi Portafolio</title>
+    </head>
+    <body
+        class="text-white"
+        style="font-family: 'Rubik', 'Plus Jakarta Sans', sans-serif;"
+    >
+        <main class="max-w-xl mx-32">
+            <slot />
+        </main>
+        <Footer />
+    </body>
+</html>

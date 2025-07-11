@@ -1,0 +1,74 @@
+---
+const navItems = [
+    { name: "Proyectos", label: "projects", url: "#projects" },
+    { name: "Sobre mí", label: "aboutme", url: "#aboutme" },
+    { name: "Experiencia", label: "experience", url: "#experience" },
+];
+---
+
+<header id="site-header" class="header visible">
+    <nav class="nav">
+        <ul class="nav-list">
+            {
+                navItems.map((item) => (
+                    <li>
+                        <a
+                            href={item.url}
+                            class="nav-link"
+                            data-section={item.label}
+                        >
+                            {item.name}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+
+    <!-- Cargar el script de navegación suave -->
+    <script src="/scripts/smoothScroll.js" is:inline></script>
+
+    <style>
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease-in-out;
+        }
+        .header.hidden {
+            transform: translateY(-100%);
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.426);
+        }
+        .header.visible {
+            transform: translateY(0);
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.101);
+        }
+        .nav-list {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+        .nav-link {
+            font-size: 1rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+        .nav-link:hover {
+            text-decoration: underline;
+            color: #8b5cf6;
+        }
+        .nav-link.active {
+            color: #8b5cf6;
+            font-weight: bold;
+        }
+    </style>
+</header>

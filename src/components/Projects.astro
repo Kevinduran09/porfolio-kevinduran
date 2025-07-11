@@ -1,0 +1,93 @@
+---
+// src/pages/projects/index.astro
+import BentoCard from "./BentoCard.astro";
+import { getProjects } from "../data/projects";
+
+const projects = getProjects();
+---
+
+<div class="p-4 mx-auto md:mx-32">
+  <h2
+    class="w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="size-8"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M7 8l-4 4l4 4"></path>
+      <path d="M17 8l4 4l-4 4"></path>
+      <path d="M14 4l-4 16"></path>
+    </svg>
+    Proyectos
+  </h2>
+
+  <div
+    class="flex flex-col gap-3 sm:grid sm:grid-cols-2 md:grid-cols-4 sm:grid-rows-3 sm:auto-rows-[160px] md:auto-rows-[200px]"
+  >
+    <div
+      class="sm:col-span-2 sm:row-span-2 flex flex-col justify-center items-center bg-gradient-to-br from-fuchsia-700/80 to-fuchsia-400/80 rounded-xl shadow-xl p-4 sm:p-8 text-white"
+    >
+      <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-center">
+        ¡Bienvenido!
+      </h3>
+      <p class="text-base sm:text-lg md:text-xl text-center">
+        Explora mis mejores proyectos destacados y conoce más sobre mi trabajo.
+      </p>
+    </div>
+
+    <BentoCard
+      project={{
+        id: projects[0].id,
+        name: projects[0].title,
+        description: projects[0].description,
+        shortDescription: projects[0].description.slice(0, 80) + "...",
+        imageUrl: projects[0].images[0] || "/projects/default-project.png"
+      }}
+      className="col-span-1 sm:col-span-2 row-span-1"
+    />
+    <BentoCard
+      project={{
+        id: projects[1].id,
+        name: projects[1].title,
+        description: projects[1].description,
+        shortDescription: projects[1].description.slice(0, 80) + "...",
+        imageUrl: projects[1].images[0] || "/projects/default-project.png"
+      }}
+      className="col-span-1 row-span-1"
+    />
+    <BentoCard
+      project={{
+        id: projects[2].id,
+        name: projects[2].title,
+        description: projects[2].description,
+        shortDescription: projects[2].description.slice(0, 80) + "...",
+        imageUrl: projects[2].images[0] || "/projects/default-project.png"
+      }}
+      className="col-span-1 row-span-1"
+    />
+    <BentoCard
+      project={{
+        id: projects[3].id,
+        name: projects[3].title,
+        description: projects[3].description,
+        shortDescription: projects[3].description.slice(0, 80) + "...",
+        imageUrl: projects[3].images[0] || "/projects/default-project.png"
+      }}
+      className="col-span-1 sm:col-span-2 row-span-1"
+    />
+    <BentoCard
+      project={{
+        id: projects[4].id,
+        name: projects[4].title,
+        description: projects[4].description,
+        shortDescription: projects[4].description.slice(0, 80) + "...",
+        imageUrl: projects[4].images[0] || "/projects/default-project.png"
+      }}
+      className="col-span-1 sm:col-span-2 row-span-1"
+    />
+  </div>
+</div>

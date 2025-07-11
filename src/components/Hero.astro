@@ -1,0 +1,77 @@
+---
+// Componente Hero
+
+import Github from "./icons/Github.astro";
+import LinkedIn from "./icons/LinkedIn.astro";
+import Mail from "./icons/Gmail.astro";
+import { Image } from "astro:assets";
+const Personal_Information = {
+  name: "Kevin Durán",
+  linkedin:
+    "https://www.linkedin.com/in/kevin-dur%C3%A1n-mart%C3%ADnez-1b6868151/",
+  email: "kevin.duran@email.com",
+  titles: [
+    "Desarrollador Full Stack",
+    "Ingeniero de Software",
+    "Apasionado por la tecnología",
+  ],
+};
+---
+
+<div class="">
+  <div
+    class="md:h-screen flex flex-col justify-normal md:flex-row items-center md:justify-center"
+  >
+    <div
+      class="relative w-[298px] h-[298px] xl:w-[398px] xl:h-[398px] md:mr-8 mb-8 md:mb-0"
+    >
+      <Image
+        src="/kevinduran-hero.webp"
+        alt="Kevin Durán"
+        width={398}
+        height={398}
+        class="object-cover rounded-full w-full h-full"
+      />
+    </div>
+    <div class="text-center md:text-left flex-1 w-full">
+      <h1 class="font-bold text-5xl sm:text-6xl mb-3 tracking-tight block">
+        Hola
+      </h1>
+      <h2 class="font-bold text-4xl sm:text-5xl mb-3 tracking-tight block">
+        Soy
+        <span class="text-fuchsia-600"> {Personal_Information.name}</span>
+      </h2>
+
+      <div class="text-4xl sm:text-4xl text-fuchsia-600 text-wrap mb-4">
+        {Personal_Information.titles[0]}
+      </div>
+      <div
+        class="flex flex-row py-2 mt-6 items-center gap-5 justify-center md:justify-between"
+      >
+        <div class="flex flex-row gap-3 items-center">
+          <a
+            href="https://github.com/Kevinduran09"
+            class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-4 py-2 rounded transition-colors"
+          >
+            <Github class="size-6" />
+            <span>GitHub</span>
+          </a>
+          <a
+            href={Personal_Information.linkedin}
+            class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-4 py-2 rounded transition-colors"
+          >
+            <LinkedIn class="size-6" />
+            <span>LinkedIn</span>
+          </a>
+          <a
+            href={`mailto:${Personal_Information.email}`}
+            class="bg-fuchsia-700 hover:bg-fuchsia-600 flex items-center gap-2 px-4 py-2 rounded transition-colors"
+          >
+            <span>Contactame</span>
+            <Mail class="size-6" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

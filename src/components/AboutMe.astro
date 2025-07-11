@@ -1,0 +1,68 @@
+---
+import { getPersonalInformation } from "../data/portfolioData";
+import DeveloperAnimation from "./DeveloperAnimation.astro";
+import TechCarousel from "./TechCarousel.astro";
+
+const personalInfo = getPersonalInformation();
+---
+
+<section
+  class="!py-32 section undefined scroll-m-20 w-full mx-auto container lg:max-w-5xl md:max-w-3xl"
+>
+  <h2
+    class="text-center text-4xl font-bold flex justify-center items-center gap-3 mb-8 text-white"
+  >
+    <svg
+      class="size-8"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+    >
+      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+    </svg>
+    Sobre Mí
+  </h2>
+
+  <div
+    class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start"
+  >
+    <div
+      class="[&>p]:mb-4 [&>p>strong]:text-fuchsia-500 order-1 md:order-1 text-lg"
+    >
+      <p>
+        Soy Kevin Andrey Durán Martínez, estudiante de Ingeniería en Sistemas de
+        Información y desarrollador de software <strong
+          >con pasión por la tecnología, la innovación y el aprendizaje
+          continuo.</strong
+        >
+      </p>
+      <p>
+        Me especializo en crear soluciones modernas, escalables y centradas en
+        resolver problemas reales, aplicando buenas prácticas y priorizando la
+        calidad. <strong>He participado en proyectos como MYPIMES</strong>, una
+        plataforma para la encuestación y diagnóstico digital de pequeñas y
+        medianas empresas en Costa Rica, desarrollada en colaboración con
+        CEMEDE.
+      </p>
+      <p>
+        Me defino como una persona <strong
+          >responsable, proactiva y comprometida</strong
+        >, en constante búsqueda de nuevos desafíos que impulsen mi crecimiento
+        y el de quienes usan la tecnología que construyo.
+      </p>
+    </div>
+
+    <div class="order-2 md:order-2 w-64 h-full">
+      <DeveloperAnimation class="mx-auto" />
+    </div>
+  </div>
+
+  <div class="mt-10">
+    <h3 class="text-2xl font-bold text-fuchsia-400 mb-4 text-center">
+      Tecnologías
+    </h3>
+    <TechCarousel />
+  </div>
+</section>
