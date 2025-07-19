@@ -2,85 +2,117 @@
 // src/pages/projects/[slug].astro
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
 import { getProjects, getProjectById } from "../../data/projects";
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.astro";
 
 export async function getStaticPaths() {
-    const projects = getProjects();
-    return projects.map((project) => ({
-        params: { slug: project.id },
-    }));
+  const projects = getProjects();
+  return projects.map((project) => ({
+    params: { slug: project.id },
+  }));
 }
 
 const { slug } = Astro.params;
 const project = getProjectById(slug as string);
 
 if (!project) {
-    throw new Error("Proyecto no encontrado");
+  throw new Error("Proyecto no encontrado");
 }
+const title = `${project.title} | Proyecto`;
+
+const technologyIcons = {
+  frontend: "/tech-icons/code.svg",
+  backend: "/tech-icons/server.svg",
+  database: "/tech-icons/database.svg",
+  deployment: "/tech-icons/globe.svg",
+};
 ---
 
-<ProjectLayout>
-    <article class="max-w-4xl mx-auto px-4 py-12">
-        <h1 class="text-4xl sm:text-5xl font-bold text-center mb-8 border-b-2 border-black pb-4">
-            {project.title}
-        </h1>
+<Layout title={title}>
+  <div class="min-h-screen bg-background">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold mb-4">{project.title}</h1>
+        <p class="text-lg text-neutral-300 leading-relaxed">
+          {project.description}
+        </p>
+      </div>
 
-        {project.images && project.images.length > 1 ? (
-            <div class="mb-10">
-                <!-- Carrusel simple -->
-                <div class="relative w-full overflow-x-auto whitespace-nowrap rounded-xl border border-black">
-                    {project.images.map((img, idx) => (
-                        <img
-                          
-                            src={img}
-                            alt={`${project.title} image ${idx + 1}`}
-                            class="inline-block w-full sm:w-auto h-auto object-cover p-2"
-                        />
-                    ))}
-                </div>
-            </div>
-        ) : (
-            <div class="mb-10">
+      <!-- Image Carousel -->
+      <div class="mb-8 bg-neutral-900 rounded-xl shadow-lg overflow-hidden">
+        <div class="relative">
+          <div class="aspect-video relative overflow-hidden rounded-lg">
+            <img
+              src={project.images?.[0] || "/coming-soon.webp"}
+              alt={`Captura de pantalla 1 del proyecto`}
+              class="object-cover w-full h-full"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Technologies -->
+      <div class="mb-">
+        <div class="p-6">
+          <h2 class="text-2xl font-bold mb-2">Tecnologías Utilizadas</h2>
+          <p class="text-neutral-400 mb-4">
+            Stack tecnológico empleado en el desarrollo del proyecto
+          </p>
+          <div class="flex flex-wrap justify-center gap-5 p-4">
+            {
+              project.technologies.map((tech) => (
                 <img
-                    src={project.images?.[0]}
-                    alt={`Imagen de ${project.title}`}
-                    class="w-full h-auto border-2 border-dashed border-black rounded-xl bg-pink-200"
+                  class="size-12 hover:scale-125 transition-all hover:cursor-pointer"
+                  src={tech}
                 />
-            </div>
-        )}
+              ))
+            }
+          </div>
+        </div>
+      </div>
 
-        <section class="mb-10">
-            <h2 class="text-2xl font-bold mb-3">Descripción del proyecto</h2>
-            <p class="text-base leading-relaxed">
-                {project.description}
-            </p>
-        </section>
-
-        <section class="mb-10">
-            <h3 class="text-xl font-bold mb-3">Tecnologías</h3>
-            <div class="flex flex-wrap gap-4">
-                {project.technologies.map((techIcon) => (
-                    <img
-                    
-                        src={techIcon}
-                        alt="Tech Icon"
-                        class="w-10 h-10 object-contain grayscale hover:grayscale-0 transition duration-300"
-                    />
-                ))}
-            </div>
-        </section>
-
-        {project.sections?.map((section) => (
-            <section class="mb-12">
-                <h3 class="text-xl font-bold mb-2">{section.title}</h3>
-                <p class="text-base leading-relaxed mb-2">{section.description}</p>
-                {section.image && (
-                    <img
-                        src={section.image}
-                        alt={`Imagen de la sección ${section.title}`}
-                        class="w-full h-auto rounded-lg border border-gray-300"
-                    />
+      <!-- Technical Sections -->
+      <div class="space-y-6">
+        <h2 class="text-2xl font-bold mb-4">Aspectos Técnicos</h2>
+        {
+          project.sections?.map((section) => (
+            <div>
+              <div class="flex items-center gap-3 p-6 text-white capitalize">
+                {technologyIcons[
+                  section.title as keyof typeof technologyIcons
+                ] && (
+                  <img
+                    src={
+                      technologyIcons[
+                        section.title as keyof typeof technologyIcons
+                      ]
+                    }
+                    alt={section.title}
+                    class="h-6 w-6"
+                    style="filter: brightness(0) invert(1);"
+                  />
                 )}
-            </section>
-        ))}
-    </article>
-</ProjectLayout>
+                <h3 class="text-2xl font-bold">{section.title}</h3>
+              </div>
+              <div class="p-6">
+                <p class="text-neutral-300 text-lg leading-relaxed text-pretty">
+                  {section.description}
+                </p>
+                {section.image && (
+                  <img
+                    src={section.image}
+                    alt={`Imagen de la sección ${section.title}`}
+                    class="w-full h-auto rounded-lg border border-gray-300 mt-4"
+                  />
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <Footer />
+</Layout>

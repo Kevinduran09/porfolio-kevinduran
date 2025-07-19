@@ -1,43 +1,46 @@
 ---
 // src/components/BentoProjectCard.astro
 import Github from "./icons/Github.astro";
+const DEFAULT_IMAGE = "coming-soon.webp";
 const { project, className = "" } = Astro.props;
+const imageUrl = project.imageUrl || DEFAULT_IMAGE;
 ---
 
 {
-    project && (
-        <div
-            class={`relative cursor-pointer flex flex-col rounded-xl overflow-hidden shadow-xl bg-neutral-900 border border-neutral-700 hover:border-fuchsia-500 hover:scale-[1.03] transition-all duration-300 ${className}`}
-        >
-            <a href={`/projects/${project.id}`}>
-                <div class="relative w-full h-32 sm:h-40 md:h-48 overflow-hidden">
-                    <img
-                        src={project.imageUrl}
-                        alt={`Imagen de ${project.name}`}
-                        class="object-cover object-center w-full h-full transition duration-500 group-hover:scale-105"
-                    />
-                </div>
-                <div class="p-4 flex flex-col justify-between">
-                    <h3 class="text-lg sm:text-xl font-bold mb-1 text-white line-clamp-1">
-                        {project.name}
-                    </h3>
-                    <p class="text-gray-300 text-sm mb-2 line-clamp-2">
-                        {project.shortDescription ||
-                            project.description.slice(0, 60) + "..."}
-                    </p>
-                    {project.github && (
-                        <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="flex items-center gap-2 bg-fuchsia-700 px-3 py-1 rounded-lg hover:bg-fuchsia-500 transition-colors text-white font-semibold text-xs shadow-md w-fit mt-auto"
-                        >
-                            <Github class="size-4" />
-                            <span class="hidden sm:inline">GitHub</span>
-                        </a>
-                    )}
-                </div>
-            </a>
+  project && (
+    <div
+      class={`relative cursor-pointer flex flex-col rounded-xl overflow-hidden shadow-xl bg-neutral-900 border border-neutral-700 hover:border-fuchsia-500 hover:scale-[1.03] transition-all duration-300 ${className}`}
+    >
+      <a href={`/projects/${project.id}`}>
+        <div class="relative w-full h-60  md:h-72 overflow-hidden">
+          <img
+            src={imageUrl}
+            alt={`Imagen de ${project.name}`}
+            class="object-cover w-full h-full transition duration-500 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+          <div class="absolute z-50  bottom-0 left-0 text-2xl p-4">
+            <h3 class="text-lg sm:text-2xl font-bold mb-1 text-fuchsia-400  line-clamp-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              {project.name}
+            </h3>
+            <p class="text-neutral-200 text-base mb-2 line-clamp-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)]">
+              {project.shortDescription ||
+                project.description.slice(0, 60) + "..."}
+            </p>
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex items-center gap-2 bg-fuchsia-700 px-3 py-1 rounded-lg hover:bg-fuchsia-500 transition-colors text-white font-semibold text-xs shadow-md w-fit mt-auto"
+              >
+                <Github class="size-4" />
+                <span class="hidden sm:inline">GitHub</span>
+              </a>
+            )}
+          </div>
         </div>
-    )
+      </a>
+    </div>
+  )
 }

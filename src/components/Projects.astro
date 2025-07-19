@@ -39,55 +39,25 @@ const projects = getProjects();
       </p>
     </div>
 
-    <BentoCard
-      project={{
-        id: projects[0].id,
-        name: projects[0].title,
-        description: projects[0].description,
-        shortDescription: projects[0].description.slice(0, 80) + "...",
-        imageUrl: projects[0].images[0] || "/projects/default-project.png"
-      }}
-      className="col-span-1 sm:col-span-2 row-span-1"
-    />
-    <BentoCard
-      project={{
-        id: projects[1].id,
-        name: projects[1].title,
-        description: projects[1].description,
-        shortDescription: projects[1].description.slice(0, 80) + "...",
-        imageUrl: projects[1].images[0] || "/projects/default-project.png"
-      }}
-      className="col-span-1 row-span-1"
-    />
-    <BentoCard
-      project={{
-        id: projects[2].id,
-        name: projects[2].title,
-        description: projects[2].description,
-        shortDescription: projects[2].description.slice(0, 80) + "...",
-        imageUrl: projects[2].images[0] || "/projects/default-project.png"
-      }}
-      className="col-span-1 row-span-1"
-    />
-    <BentoCard
-      project={{
-        id: projects[3].id,
-        name: projects[3].title,
-        description: projects[3].description,
-        shortDescription: projects[3].description.slice(0, 80) + "...",
-        imageUrl: projects[3].images[0] || "/projects/default-project.png"
-      }}
-      className="col-span-1 sm:col-span-2 row-span-1"
-    />
-    <BentoCard
-      project={{
-        id: projects[4].id,
-        name: projects[4].title,
-        description: projects[4].description,
-        shortDescription: projects[4].description.slice(0, 80) + "...",
-        imageUrl: projects[4].images[0] || "/projects/default-project.png"
-      }}
-      className="col-span-1 sm:col-span-2 row-span-1"
-    />
+    {
+      projects.slice(0, 5).map((project, idx) => (
+        <BentoCard
+          project={{
+            id: project.id,
+            name: project.title,
+            description: project.description,
+            shortDescription: project.description.slice(0, 80) + "...",
+            imageUrl: project.images[0],
+          }}
+          className={
+            idx === 0
+              ? "col-span-1 sm:col-span-2 row-span-1"
+              : idx === 3 || idx === 4
+                ? "col-span-1 sm:col-span-2 row-span-1"
+                : "col-span-1 row-span-1"
+          }
+        />
+      ))
+    }
   </div>
 </div>
