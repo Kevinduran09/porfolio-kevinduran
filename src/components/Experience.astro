@@ -1,6 +1,12 @@
 ---
 import { experience } from "../data/experience";
 import ExperienceItem from "./ExperienceItem.astro";
+import { GraduationCap, Briefcase, Code } from "lucide-astro";
+const iconMap = {
+  "Universidad Nacional de Costa Rica": GraduationCap,
+  Udemy: Code,
+  "Interfrutd Frutas Del Mundo S.A": Briefcase,
+};
 ---
 
 <section class="p-4 md:mx-32 mx-auto container lg:max-w-5xl md:max-w-3xl">
@@ -27,16 +33,16 @@ import ExperienceItem from "./ExperienceItem.astro";
   </h2>
 
   <div>
-    <ol class="relative border-s-2 border-gray-700">
-      {
-        experience
-          .sort((a, b) => a.order - b.order)
-          .map((experience) => (
-            <li class="mb-10 ms-6">
-              <ExperienceItem {...experience} />
-            </li>
-          ))
-      }
-    </ol>
+    {
+      experience
+        .sort((a, b) => a.order - b.order)
+        .map((exp, idx, arr) => (
+          <ExperienceItem
+            {...exp}
+            icon={iconMap[exp.institution] || Briefcase}
+            isLast={idx === arr.length - 1}
+          />
+        ))
+    }
   </div>
 </section>

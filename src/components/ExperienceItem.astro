@@ -1,53 +1,109 @@
 ---
-const { title, institution, description, date, certificate } = Astro.props;
+const {
+  title,
+  institution,
+  description,
+  date,
+  certificate,
+  icon: Icon,
+  isLast = false,
+} = Astro.props;
 ---
 
-<span
-  class="absolute flex items-center justify-center size-8 rounded-full -start-4 bg-gray-800"
->
-  <svg
-    class="size-3.5 text-gray-400"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
-    ></path>
-  </svg>
-</span>
-<div class="space-y-2">
-  <time class="mb-3 text-base font-normal leading-none text-fuchsia-400"
-    >{date}</time
-  >
-  <h3 class="text-2xl font-semibold text-white">{title}</h3>
-  <span class="mb-3 text-xl font-normal text-fuchsia-400">{institution}</span>
-  <p class="mb-4 text-lg font-normal text-white">{description}</p>
+<div class="relative flex gap-6 mb-6">
+  {/* Timeline line */}
   {
-    certificate && (
-      <a
-        href={certificate}
-        target="_blank"
-        class="inline-flex items-center px-4 py-2 text-sm font-medium  rounded-lg   focus:z-10  focus:outline-none  focus:text-blue-700 bg-gray-800 text-fuchsia-400 border-gray-600  hover:bg-gray-700"
-      >
-        Certificado
-        <svg
-          class="w-3 h-3 ms-2 rtl:rotate-180"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 14 10"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M1 5h12m0 0L9 1m4 4L9 9"
-          />
-        </svg>
-      </a>
+    (
+      <div class="absolute left-6 top-0 w-0.5 h-full bg-gradient-to-b from-fuchsia-500 to-purple-500 opacity-30" />
     )
   }
+
+  {/* Timeline dot */}
+  <div class="relative flex-shrink-0">
+    <div
+      class="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-fuchsia-500 to-purple-600 rounded-full shadow-lg transition-shadow"
+      style="animation-duration: 2s;"
+    >
+      {
+        Icon && (
+          <Icon class="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-300" />
+        )
+      }
+    </div>
+  </div>
+
+  {/* Content card */}
+  <div
+    class="flex-1 group hover:scale-[1.02] transition-all duration-300 hover:shadow-xl border-0 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-xl overflow-hidden"
+  >
+    <div class="p-6">
+      <div
+        class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4"
+      >
+        <div class="flex-1">
+          <div class="flex items-center gap-2 text-sm text-fuchsia-400 mb-2">
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"
+              ></path>
+            </svg>
+            {date}
+          </div>
+          <h3
+            class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-fuchsia-600 transition-colors"
+          >
+            {title}
+          </h3>
+          <p class="text-fuchsia-600 dark:text-fuchsia-400 font-medium">
+            {institution}
+          </p>
+        </div>
+        {
+          certificate && (
+            <a
+              href={certificate}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-3 py-1 text-sm border rounded hover:bg-fuchsia-50 hover:border-fuchsia-300 hover:scale-105 transition-all duration-200 bg-transparent"
+            >
+              <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" x2="21" y1="14" y2="3" />
+              </svg>
+              Certificado
+            </a>
+          )
+        }
+      </div>
+
+      <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+        {description}
+      </p>
+
+      <!-- {
+        item.skills && item.skills.length > 0 && (
+          <div class="flex flex-wrap gap-2 pt-4">
+            {item.skills.map((skill) => (
+              <span class="inline-block bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-900 dark:text-fuchsia-200 px-2 py-1 rounded text-sm hover:bg-fuchsia-200 transition-colors">
+                {skill}
+              </span>
+            ))}
+          </div>
+        )
+      } -->
+    </div>
+  </div>
 </div>

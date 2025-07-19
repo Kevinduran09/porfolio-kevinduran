@@ -3,8 +3,8 @@
 const emailAdress = "kduran.091001@gmail.com";
 ---
 
-<section class="mx-8 md:mx-36 my-16">
-  <div class="md:mx-80">
+<section class="flex items-center justify-center w-full">
+  <div class="p-4 md:mx-32 mx-auto container lg:max-w-5xl md:max-w-3xl">
     <div class="w-full text-center my-10">
       <span class="text-4xl font-bold">
         Si quieres saber mas de mi puedes contactarme!
@@ -50,23 +50,23 @@ const emailAdress = "kduran.091001@gmail.com";
       </div>
     </div>
   </div>
+
+  <script define:vars={{ emailAdress }}>
+    const button = document.querySelector("#copy-button");
+    const tooltip = document.querySelector("#tooltip");
+
+    if (button && tooltip) {
+      button.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(emailAdress);
+          tooltip.style.opacity = "1";
+          setTimeout(() => {
+            tooltip.style.opacity = "0";
+          }, 2000);
+        } catch (err) {
+          console.error("Error al copiar:", err);
+        }
+      });
+    }
+  </script>
 </section>
-
-<script define:vars={{ emailAdress }}>
-  const button = document.querySelector("#copy-button");
-  const tooltip = document.querySelector("#tooltip");
-
-  if (button && tooltip) {
-    button.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(emailAdress);
-        tooltip.style.opacity = "1";
-        setTimeout(() => {
-          tooltip.style.opacity = "0";
-        }, 2000);
-      } catch (err) {
-        console.error("Error al copiar:", err);
-      }
-    });
-  }
-</script>
