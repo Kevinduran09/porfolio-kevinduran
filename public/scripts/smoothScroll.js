@@ -87,8 +87,8 @@ class SmoothScrollNavigation {
 
   setupIntersectionObserver() {
     const observerOptions = {
-      rootMargin: "0px 0px 10% 0px", // menos agresivo
-      threshold: 0.1, // permite activar antes
+      rootMargin: "0px 0px -10% 0px", // menos agresivo
+      threshold: 0.2, // permite activar antes
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -139,8 +139,8 @@ class SmoothScrollNavigation {
       header.classList.add("visible");
     } else if (currentScroll > 200) {
       // Ocultar solo cuando se hace scroll hacia abajo y no estamos cerca del tope
-      header.classList.add("hidden");
-      header.classList.remove("visible");
+      //   header.classList.add("hidden");
+      //   header.classList.remove("visible");
     }
 
     this.lastScroll = currentScroll;
