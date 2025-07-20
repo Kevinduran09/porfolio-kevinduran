@@ -4,7 +4,6 @@ import FrontendIcon from "../../components/icons/FrontendIcon.astro";
 import BackendIcon from "../../components/icons/BackendIcon.astro";
 import DatabaseIcon from "../../components/icons/DatabaseIcon.astro";
 import DeploymentIcon from "../../components/icons/DeploymentIcon.astro";
-import ProjectLayout from "../../layouts/ProjectLayout.astro";
 import { getProjects, getProjectById } from "../../data/projects";
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
@@ -23,7 +22,7 @@ if (!project) {
   throw new Error("Proyecto no encontrado");
 }
 const title = `${project.title} | Proyecto`;
-
+const description = project.description;
 const sectionIcons = {
   frontend: FrontendIcon,
   backend: BackendIcon,
@@ -32,12 +31,17 @@ const sectionIcons = {
 };
 ---
 
-<Layout title={title}>
+<Layout title={title} description={description}>
   <div class="min-h-screen bg-background">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
       <!-- Header -->
       <div class="mb-8">
-        <h1 class="text-4xl font-bold mb-4">{project.title}</h1>
+        <h1
+          transition:name={`title-${project.title}`}
+          class="text-4xl font-bold mb-4"
+        >
+          {project.title}
+        </h1>
         <p class="text-lg text-neutral-300 leading-relaxed">
           {project.description}
         </p>
@@ -48,6 +52,7 @@ const sectionIcons = {
         <div class="relative">
           <div class="aspect-video relative overflow-hidden rounded-lg">
             <img
+              transition:name={`image-${project.title}`}
               src={project.images?.[0] || "/coming-soon.webp"}
               alt={`Captura de pantalla 1 del proyecto`}
               class="object-cover w-full h-full"
@@ -82,7 +87,7 @@ const sectionIcons = {
         <h2 class="text-2xl font-bold mb-4">Aspectos Técnicos</h2>
         {
           project.sections?.map((section) => {
-            const Icon = sectionIcons[section.id];
+            const Icon = sectionIcons[section.title];
             return (
               <div>
                 <div class="flex items-center gap-3 p-6 text-white capitalize">

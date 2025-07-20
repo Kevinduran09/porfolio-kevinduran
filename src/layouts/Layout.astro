@@ -1,25 +1,31 @@
 ---
 import "../styles/global.css";
-const { title } = Astro.props;
+import { ClientRouter } from "astro:transitions";
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="w-full min-w-full">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="Ingeniero en sistemas de información. Contactame para convertir tus ideas en proyectos geniales. Comprometido con la calidad y soluciones escalables. "
-    />
+    <meta name="generator" content={Astro.generator} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://kevinduran.vercel.app/" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <meta
       name="google-site-verification"
       content="4z9ec7fNrR2liXYGHBxIbmyx9FYd9w2wD6UrW6NM8i0"
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kevin Duran | Portafolio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://www.infolavelada.com/og.jpg" />
 
-    <title>{title}</title>
-    <link rel="stylesheet" href="/src/styles/globals.css" />
+    <ClientRouter />
   </head>
   <body class="text-white w-full min-w-full">
     <div class="relative w-full">

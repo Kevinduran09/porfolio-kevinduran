@@ -14,14 +14,18 @@ const imageUrl = project.imageUrl || DEFAULT_IMAGE;
       <a href={`/projects/${project.id}`}>
         <div class="relative w-full h-60  md:h-72 overflow-hidden">
           <img
+            transition:name={`image-${project.title}`}
             src={imageUrl}
-            alt={`Imagen de ${project.name}`}
+            alt={`Imagen de ${project.title}`}
             class="object-cover w-full h-full transition duration-500 group-hover:scale-105"
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
           <div class="absolute z-50  bottom-0 left-0 text-2xl p-4">
-            <h3 class="text-lg sm:text-2xl font-bold mb-1 text-fuchsia-400  line-clamp-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-              {project.name}
+            <h3
+              transition:name={`title-${project.title}`}
+              class="text-lg sm:text-2xl font-bold mb-1 text-fuchsia-400  line-clamp-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+            >
+              {project.title}
             </h3>
             <p class="text-neutral-200 text-base mb-2 line-clamp-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)]">
               {project.shortDescription ||
