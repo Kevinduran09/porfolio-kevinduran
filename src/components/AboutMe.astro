@@ -1,27 +1,20 @@
 ---
 import { getPersonalInformation } from "../data/portfolioData";
 import DeveloperAnimation from "./DeveloperAnimation.astro";
+import PersonIcon from "./icons/PersonIcon.astro";
 import TechCarousel from "./TechCarousel.astro";
 
 const personalInfo = getPersonalInformation();
 ---
 
 <section
-  class="!py-32 section scroll-m-20 w-full mx-auto container lg:max-w-5xl md:max-w-3xl"
+  id="aboutme"
+  class="section scroll-m-20 max-w-screen-xl mx-auto md:w-5/6 lg:w-4/6 px-3 md:px-0 pt-10"
 >
   <h2
     class="text-center text-4xl font-bold flex justify-center items-center gap-3 mb-8 text-white"
   >
-    <svg
-      class="size-8"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      viewBox="0 0 24 24"
-    >
-      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
-      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
-    </svg>
+    <PersonIcon />
     Sobre Mí
   </h2>
 

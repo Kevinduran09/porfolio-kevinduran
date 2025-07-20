@@ -11,25 +11,16 @@ import Footer from "../components/Footer.astro";
 
 <Layout title="Kevin Duran | Portafolio">
   <Header />
-  <main class="px-4">
-    <section class="min-h-screen flex items-center justify-center w-full">
-      <Hero />
-    </section>
-    <section id="projects" class="min-h-screen w-full">
-      <Projects />
-    </section>
-    <section id="aboutme" class="min-h-screen w-full">
-      <AboutMe />
-    </section>
-    <section
-      id="experience"
-      class="min-h-screen flex items-center justify-center w-full"
-    >
-      <Experience />
-    </section>
-    <section class="">
-      <Contact />
-    </section>
+  <main class="px-4 space-y-16 md:space-y-36">
+    <Hero />
+
+    <Projects />
+
+    <AboutMe />
+
+    <Experience />
+
+    <Contact />
   </main>
   <Footer />
 </Layout>

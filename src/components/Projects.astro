@@ -2,26 +2,19 @@
 // src/pages/projects/index.astro
 import BentoCard from "./BentoCard.astro";
 import { getProjects } from "../data/projects";
+import ProjectsIcon from "./icons/ProjectsIcon.astro";
 
 const projects = getProjects();
 ---
 
-<div class="p-4 mx-auto md:mx-32">
+<section
+  id="projects"
+  class="scroll-m-20 max-w-screen-xl mx-auto md:w-5/6 lg:w-4/6 px-3 md:px-0 pt-10"
+>
   <h2
     class="w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="size-8"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <path d="M7 8l-4 4l4 4"></path>
-      <path d="M17 8l4 4l-4 4"></path>
-      <path d="M14 4l-4 16"></path>
-    </svg>
+    <ProjectsIcon />
     Proyectos
   </h2>
 
@@ -60,4 +53,4 @@ const projects = getProjects();
       ))
     }
   </div>
-</div>
+</section>

@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;700&family=Rubik&display=swap');
 @import "tailwindcss";
+@plugin "@midudev/tailwind-animations";
 
-html, body {
+html,
+body {
   font-family: 'Manrope', 'Rubik', 'Plus Jakarta Sans', sans-serif;
   background: #000;
   color: #fff;
@@ -11,15 +13,17 @@ html, body {
   min-width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-} 
+}
 
 
 @theme {
   --animate-loop-scroll: loop-scroll 30s linear infinite;
+
   @keyframes loop-scroll {
     0% {
       transform: translateX(0);
     }
+
     100% {
       transform: translateX(calc(-120px *18));
     }

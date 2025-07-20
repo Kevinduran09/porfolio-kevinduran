@@ -1,74 +1,122 @@
 ---
+import ExperienceIcon from "./icons/ExperienceIcon.astro";
+import PersonIcon from "./icons/PersonIcon.astro";
+import ProjectsIcon from "./icons/ProjectsIcon.astro";
+
 const navItems = [
-    { name: "Proyectos", label: "projects", url: "#projects" },
-    { name: "Sobre mí", label: "aboutme", url: "#aboutme" },
-    { name: "Experiencia", label: "experience", url: "#experience" },
+  {
+    name: "Proyectos",
+    label: "projects",
+    url: "#projects",
+    icon: ProjectsIcon,
+  },
+  { name: "Sobre mí", label: "aboutme", url: "#aboutme", icon: PersonIcon },
+  {
+    name: "Experiencia",
+    label: "experience",
+    url: "#experience",
+    icon: ExperienceIcon,
+  },
 ];
 ---
 
 <header id="site-header" class="header visible">
-    <nav class="nav">
-        <ul class="nav-list">
-            {
-                navItems.map((item) => (
-                    <li>
-                        <a
-                            href={item.url}
-                            class="nav-link"
-                            data-section={item.label}
-                        >
-                            {item.name}
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-    </nav>
+  <nav class="nav bg-slate-800 backgorund-blur-sm rounded-full py-3 px-5">
+    <ul class="nav-list">
+      {
+        navItems.map((item) => (
+          <li>
+            <a href={item.url} class="nav-link" data-section={item.label}>
+              <div class="hidden  md:block">
+                {item.icon && <item.icon class="nav-icon md:block" />}
+              </div>
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 
-    <!-- Cargar el script de navegación suave -->
-    <script src="/scripts/smoothScroll.js" is:inline></script>
+  <!-- Cargar el script de navegación suave -->
+  <script src="/scripts/smoothScroll.js" is:inline></script>
 
-    <style>
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-            padding: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.5s ease-in-out;
-        }
-        .header.hidden {
-            transform: translateY(-100%);
-            backdrop-filter: blur(8px);
-            background-color: rgba(0, 0, 0, 0.426);
-        }
-        .header.visible {
-            transform: translateY(0);
-            backdrop-filter: blur(8px);
-            background-color: rgba(0, 0, 0, 0.101);
-        }
-        .nav-list {
-            display: flex;
-            gap: 1rem;
-            list-style: none;
-        }
-        .nav-link {
-            font-size: 1rem;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease-in-out;
-        }
-        .nav-link:hover {
-            text-decoration: underline;
-            color: #8b5cf6;
-        }
-        .nav-link.active {
-            color: #8b5cf6;
-            font-weight: bold;
-        }
-    </style>
+  <style>
+    .header {
+      position: fixed;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.5s ease-in-out;
+      animation: slideDownFade 0.8s ease-out;
+    }
+    .header.hidden {
+      transform: translateY(-100%);
+    }
+    .header.visible {
+      transform: translateY(0);
+    }
+
+    .nav-list {
+      display: flex;
+      gap: 2.3rem;
+      list-style: none;
+    }
+    .nav-link {
+      font-size: 1rem;
+      color: white;
+      text-decoration: none;
+      transition:
+        transform 0.3s ease-in-out,
+        color 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-icon {
+      display: none;
+    }
+    .nav-link:hover {
+      color: #8b5cf6;
+      transform: scale(1.1) translateY(-5px);
+    }
+    .nav-link.active {
+      color: #8b5cf6;
+      font-weight: bold;
+    }
+    @keyframes slideDownFade {
+      0% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes slideInUp {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @media (min-width: 768px) {
+      .header {
+        bottom: 2rem;
+        animation: slideInUp 0.8s ease-out forwards;
+      }
+      .nav-icon {
+        display: block;
+      }
+    }
+  </style>
 </header>

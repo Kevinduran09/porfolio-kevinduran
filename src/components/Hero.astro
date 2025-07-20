@@ -5,6 +5,7 @@ import Github from "./icons/Github.astro";
 import LinkedIn from "./icons/LinkedIn.astro";
 import Mail from "./icons/Gmail.astro";
 import { Image } from "astro:assets";
+
 const Personal_Information = {
   name: "Kevin Durán",
   linkedin:
@@ -18,35 +19,48 @@ const Personal_Information = {
 };
 ---
 
-<div class="">
+<section
+  class="max-w-screen-xl md:min-h-screen flex mx-auto md:w-5/6 lg:w-4/6 px-3 md:px-0 pt-36 md:pt-10"
+>
   <div
-    class="md:h-screen flex flex-col justify-normal md:flex-row items-center md:justify-center"
+    class="flex flex-col lg:flex-row items-center justify-center px-3 md:px-0"
   >
-    <div
-      class="relative w-[298px] h-[298px] xl:w-[398px] xl:h-[398px] md:mr-8 mb-8 md:mb-0"
-    >
+    <!-- Imagen -->
+    <div class="lg:w-1/2 lg:order-last order-first grid place-items-end">
       <Image
-        src="/kevinduran-hero.webp"
+        src="/kevinduran-hero-neo.webp"
         alt="Kevin Durán"
         width={398}
         height={398}
         class="object-cover rounded-full w-full h-full"
       />
     </div>
-    <div class="text-center md:text-left flex-1 w-full">
-      <h1 class="font-bold text-5xl sm:text-6xl mb-3 tracking-tight block">
-        Hola
-      </h1>
-      <h2 class="font-bold text-4xl sm:text-5xl mb-3 tracking-tight block">
-        Soy
-        <span class="text-fuchsia-600"> {Personal_Information.name}</span>
-      </h2>
 
-      <div class="text-4xl sm:text-4xl text-fuchsia-600 text-wrap mb-4">
-        {Personal_Information.titles[0]}
+    <!-- Texto -->
+    <div class="lg:w-1/2 lg:order-first order-last">
+      <div class="text-center md:text-left w-full">
+        <p class="mb-3 text-3xl leading-none text-fuchsia-600">Hola soy</p>
+        <h1
+          class="mb-4 text-4xl font-title font-black leading-none md:text-6xl lg:text-5xl 2xl:text-7xl text-white"
+        >
+          {Personal_Information.name}
+        </h1>
+
+        <p
+          class="mb-4 mt-2 lg:mt-0 text-2xl font-semibold font-secundary leading-none md:text-3xl lg:text-4xl text-fuchsia-600"
+        >
+          {Personal_Information.titles[0]}
+        </p>
+        <p
+          class="mb-6 text-lg font-normal text-grisclaro2 md:text-base 2xl:text-xl [text-wrap:balance]"
+        >
+          Apasionado por los desafíos que impulsan mi crecimiento. Comprometido
+          con el desarrollo de soluciones escalables y de alta calidad.
+        </p>
       </div>
       <div
-        class="flex flex-row py-2 mt-6 text-sm items-center gap-2 md:gap-3 justify-center md:justify-between"
+        class="flex flex-row mt-6 text-sm items-center gap-2 md:gap-3
+        justify-center md:justify-start"
       >
         <a
           href="https://github.com/Kevinduran09"
@@ -72,4 +86,4 @@ const Personal_Information = {
       </div>
     </div>
   </div>
-</div>
+</section>
