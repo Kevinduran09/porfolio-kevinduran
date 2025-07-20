@@ -9,4 +9,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [lottie(), robotsTxt()],
+  site: "https://kevinduran.vercel.app/",
 });
