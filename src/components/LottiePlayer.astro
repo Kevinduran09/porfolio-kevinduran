@@ -1,4 +1,5 @@
 ---
+// Componente de animación Lottie optimizado para Astro
 interface Props {
   class?: string;
   width?: string;
@@ -6,7 +7,6 @@ interface Props {
   autoplay?: boolean;
   loop?: boolean;
   speed?: number;
-  path: string; // Ruta del JSON de la animación
 }
 
 const {
@@ -16,7 +16,6 @@ const {
   autoplay = true,
   loop = true,
   speed = 1,
-  path = "/animations/developer-animation.json",
 } = Astro.props;
 ---
 
@@ -27,8 +26,8 @@ const {
   data-autoplay={autoplay}
   data-loop={loop}
   data-speed={speed}
-  data-path={path}
 >
+  <!-- Fallback content -->
   <div class="lottie-fallback flex items-center justify-center h-full">
     <div class="animate-pulse text-gray-400">
       <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
@@ -40,49 +39,67 @@ const {
   </div>
 </div>
 
-<script >
-  import lottie from "lottie-web";
+<script>
+  // Función optimizada para cargar Lottie
+  async function loadLottieAnimation() {
+    try {
+      const lottie = await import("lottie-web");
 
-  const container = document.getElementById("lottie-container");
-  if (container) {
-    const autoplay = container.dataset.autoplay === "true";
-    const loop = container.dataset.loop === "true";
-    const speed = parseFloat(container.dataset.speed || "1");
-    const path = container.dataset.path;
+      const container = document.getElementById("lottie-container");
+      if (!container) return;
 
-    const animation = lottie.loadAnimation({
-      container,
-      renderer: "svg",
-      loop,
-      autoplay,
-      path,
-      rendererSettings: {
-        progressiveLoad: true,
-        hideOnTransparent: true,
-      },
-    });
+      const autoplay = container.dataset.autoplay === "true";
+      const loop = container.dataset.loop === "true";
+      const speed = parseFloat(container.dataset.speed || "1");
 
-    animation.setSpeed(speed);
+      const animation = lottie.default.loadAnimation({
+        container: container,
+        renderer: "svg",
+        loop: loop,
+        autoplay: autoplay,
+        path: "/animations/developer-animation.json",
+        rendererSettings: {
+          progressiveLoad: true,
+          hideOnTransparent: true,
+        },
+      });
 
-    animation.addEventListener("data_ready", () => {
-      container.classList.add("lottie-loaded");
-    });
+      animation.setSpeed(speed);
 
-    animation.addEventListener("data_failed", (error) => {
-      console.error("Error cargando animación Lottie:", error);
-      container.classList.add("lottie-error");
-    });
+      animation.addEventListener("data_ready", () => {
+        container.classList.add("lottie-loaded");
+      });
 
-    // Intersection Observer para pausar/reanudar la animación
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) animation.play();
-        else animation.pause();
-      },
-      { threshold: 0.1 },
-    );
+      animation.addEventListener("data_failed", (error) => {
+        console.error("Error cargando animación Lottie:", error);
+        container.classList.add("lottie-error");
+      });
 
-    observer.observe(container);
+      // Intersection Observer para optimización
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animation.play();
+            } else {
+              animation.pause();
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+
+      observer.observe(container);
+    } catch (error) {
+      console.error("Error inicializando Lottie:", error);
+    }
+  }
+
+  // Cargar cuando el DOM esté listo
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadLottieAnimation);
+  } else {
+    loadLottieAnimation();
   }
 </script>
 
@@ -90,12 +107,16 @@ const {
   .lottie-animation {
     position: relative;
     overflow: hidden;
+
     transition: all 0.3s ease;
   }
 
   .lottie-fallback {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(4px);
     border-radius: 12px;
@@ -113,6 +134,7 @@ const {
     background: rgba(255, 107, 107, 0.1);
   }
 
+  /* Responsive */
   @media (max-width: 768px) {
     .lottie-animation {
       border-radius: 8px;
