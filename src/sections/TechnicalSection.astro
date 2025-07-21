@@ -1,0 +1,37 @@
+---
+import { getSectionIcon } from "@/data/section-icons";
+import type { ProjectSection } from "@/data/projects";
+
+interface Props {
+  section: ProjectSection;
+}
+
+const { section } = Astro.props;
+const sectionIcon = getSectionIcon(section.slug);
+const IconComponent = sectionIcon?.component;
+---
+
+<article
+  class="overflow-hidden border-0 bg-gradient-to-br from-gray-900/10 to-gray-800/30"
+>
+  <header class="flex items-center gap-3 p-6 text-white">
+    {IconComponent && <IconComponent className="h-6 w-6" />}
+    <h3 class="text-2xl font-bold">{section.title}</h3>
+  </header>
+  <div class="p-6">
+    <p class="text-neutral-300 text-lg leading-relaxed text-pretty">
+      {section.description}
+    </p>
+    {
+      section.image && (
+        <img
+          src={section.image}
+          alt={`Imagen de la sección ${section.title}`}
+          class="w-full h-auto rounded-lg border border-gray-300 mt-4"
+          loading="lazy"
+        />
+      )
+    }
+  </div>
+</article>
+

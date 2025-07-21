@@ -1,7 +1,7 @@
 ---
-import ExperienceIcon from "./icons/ExperienceIcon.astro";
-import PersonIcon from "./icons/PersonIcon.astro";
-import ProjectsIcon from "./icons/ProjectsIcon.astro";
+import ExperienceIcon from "@/components/icons/ExperienceIcon.astro";
+import PersonIcon from "@/components/icons/PersonIcon.astro";
+import ProjectsIcon from "@/components/icons/ProjectsIcon.astro";
 
 const navItems = [
   {
@@ -20,7 +20,7 @@ const navItems = [
 ];
 ---
 
-<header id="site-header" class="header visible">
+<header id="site-header" class="header">
   <nav class="nav bg-slate-800 backgorund-blur-sm rounded-full py-3 px-5">
     <ul class="nav-list">
       {
@@ -54,12 +54,7 @@ const navItems = [
       transition: all 0.5s ease-in-out;
       animation: slideDownFade 0.8s ease-out;
     }
-    .header.hidden {
-      transform: translateY(-100%);
-    }
-    .header.visible {
-      transform: translateY(0);
-    }
+
 
     .nav-list {
       display: flex;

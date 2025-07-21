@@ -1,10 +1,10 @@
 ---
-import { getPersonalInformation } from "../data/portfolioData";
-import DeveloperAnimation from "./DeveloperAnimation.astro";
-import PersonIcon from "./icons/PersonIcon.astro";
-import TechCarousel from "./TechCarousel.astro";
+import { getPersonalInformation } from "@/data/portfolioData";
+import LottiePlayer from "@/components/LottiePlayer.astro";
+import PersonIcon from "@/components/icons/PersonIcon.astro";
+import TechCarousel from "@/components/TechCarousel.astro";
 
-const personalInfo = getPersonalInformation();
+
 ---
 
 <section
@@ -48,7 +48,16 @@ const personalInfo = getPersonalInformation();
     </div>
 
     <div class="order-2 md:order-2 w-64 h-full">
-      <DeveloperAnimation class="mx-auto" />
+      <LottiePlayer
+        class="mi-clase-personalizada"
+        width="300px"
+        height="300px"
+        autoplay={true}
+        loop={true}
+        speed={1}
+        path="/animations/developer-animation.json"
+        client:load
+      />
     </div>
   </div>
 

@@ -1,15 +1,15 @@
 /**
- * Sistema de desplazamiento suave entre secciones
- * Permite navegar entre secciones sin modificar la URL
+ * Sistema de desplazamiento suave optimizado
+ * Versión simplificada y optimizada para rendimiento
  */
 
 class SmoothScrollNavigation {
   constructor() {
     this.navLinks = document.querySelectorAll("[data-section]");
     this.sections = document.querySelectorAll("section[id]");
-    this.currentSection = null;
     this.isScrolling = false;
-    this.scrollTimeout = null;
+    this.topThreshold = 100; // Umbral para considerar "tope" de la página
+    this.bottomThreshold = 100; // Umbral para considerar "final" de la página
 
     this.init();
   }
@@ -17,157 +17,235 @@ class SmoothScrollNavigation {
   init() {
     this.setupEventListeners();
     this.setupIntersectionObserver();
-    this.setupScrollThrottling();
+    this.setupScrollHandler();
   }
 
   setupEventListeners() {
+    // Guardar referencia al handler para poder removerlo después
+    this.handleNavClick = (e) => {
+      e.preventDefault();
+      this.scrollToSection(e.currentTarget.dataset.section);
+    };
+
     // Interceptar clics en enlaces de navegación
-    this.navLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        this.scrollToSection(link.dataset.section);
-      });
+    this.navLinks.forEach(link => {
+      link.addEventListener("click", this.handleNavClick);
     });
 
     // Prevenir comportamiento por defecto de enlaces con hash
-    document.addEventListener("click", (e) => {
+    this.handleDocumentClick = (e) => {
       const target = e.target.closest('a[href^="#"]');
       if (target && target.dataset.section) {
         e.preventDefault();
         this.scrollToSection(target.dataset.section);
       }
-    });
+    };
+
+    document.addEventListener("click", this.handleDocumentClick);
   }
 
   scrollToSection(sectionId) {
     const targetSection = document.getElementById(sectionId);
-    if (!targetSection) return;
+    if (!targetSection || this.isScrolling) return;
 
     this.isScrolling = true;
-
-    // Calcular offset para el header fijo
-    const headerHeight =
-      document.getElementById("site-header")?.offsetHeight || 0;
+    const headerHeight = document.getElementById("site-header")?.offsetHeight || 0;
     const targetPosition = targetSection.offsetTop - headerHeight - 20;
 
-    // Desplazamiento suave con easing personalizado
-    this.smoothScrollTo(targetPosition, 800, (t) => {
-      // Función de easing cubic-bezier para movimiento más natural
-      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    });
-
-    // Actualizar estado de navegación
-    this.updateActiveNavLink(sectionId);
-
-    // Resetear flag de desplazamiento después de completar
-    setTimeout(() => {
-      this.isScrolling = false;
-    }, 800);
+    this.smoothScrollTo(targetPosition, 600);
+    
+    // Resetear flag después de completar
+    setTimeout(() => this.isScrolling = false, 600);
   }
 
-  smoothScrollTo(targetPosition, duration, easingFunction) {
+  smoothScrollTo(targetPosition, duration) {
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
     const startTime = performance.now();
 
-    const animateScroll = (currentTime) => {
+    const animate = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = easingFunction(progress);
+      // Easing cubic-bezier simplificado
+      const ease = progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 
-      window.scrollTo(0, startPosition + distance * easedProgress);
+      window.scrollTo(0, startPosition + distance * ease);
 
-      if (progress < 1) {
-        requestAnimationFrame(animateScroll);
-      }
+      if (progress < 1) requestAnimationFrame(animate);
     };
 
-    requestAnimationFrame(animateScroll);
+    requestAnimationFrame(animate);
   }
 
   setupIntersectionObserver() {
-    const observerOptions = {
-      rootMargin: "0px 0px -10% 0px", // menos agresivo
-      threshold: 0.2, // permite activar antes
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        console.log("Intersección:", entry.target.id, entry.isIntersecting);
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting && !this.isScrolling) {
           this.updateActiveNavLink(entry.target.id);
-          this.currentSection = entry.target.id;
         }
       });
-    }, observerOptions);
-
-    this.sections.forEach((section) => {
-      observer.observe(section);
+    }, { 
+      threshold: 0.3,
+      rootMargin: "0px 0px -10% 0px"
     });
+
+    this.sections.forEach(section => this.observer.observe(section));
   }
 
-  setupScrollThrottling() {
+  setupScrollHandler() {
     let ticking = false;
 
-    const updateOnScroll = () => {
+    this.handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          this.handleScrollUpdate();
+          this.checkTopPosition();
+          this.checkBottomPosition();
           ticking = false;
         });
         ticking = true;
       }
     };
 
-    window.addEventListener("scroll", updateOnScroll, { passive: true });
+    window.addEventListener("scroll", this.handleScroll, { passive: true });
   }
 
-  handleScrollUpdate() {
-    // Actualizar visibilidad del header
-    const header = document.getElementById("site-header");
-    if (!header) return;
 
+
+  checkTopPosition() {
     const currentScroll = window.scrollY;
-    const lastScroll = this.lastScroll || 0;
-    const scrollDelta = currentScroll - lastScroll;
+    const isAtTop = currentScroll <= this.topThreshold;
 
-    // Mostrar header cuando se hace scroll hacia arriba o en el tope
-    const shouldShow = currentScroll < 100 || scrollDelta < 0;
-
-    if (shouldShow) {
-      header.classList.remove("hidden");
-      header.classList.add("visible");
-    } else if (currentScroll > 200) {
-      // Ocultar solo cuando se hace scroll hacia abajo y no estamos cerca del tope
-      //   header.classList.add("hidden");
-      //   header.classList.remove("visible");
+    // Si estamos en el tope, quitar todos los efectos active
+    if (isAtTop) {
+      this.clearAllActiveStates();
     }
+  }
+  checkBottomPosition() {
+    const currentScroll = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    // Calcular si estamos cerca del final de la página
+    const isAtBottom = (currentScroll + windowHeight) >= (documentHeight - this.bottomThreshold);
 
-    this.lastScroll = currentScroll;
+    // Si estamos en el final, quitar todos los efectos active
+    if (isAtBottom) {
+      this.clearAllActiveStates();
+    }
   }
 
-  updateActiveNavLink(sectionId) {
-    this.navLinks.forEach((link) => {
-      const isActive = link.dataset.section === sectionId;
-      link.classList.toggle("active", isActive);
+  clearAllActiveStates() {
+    this.navLinks.forEach(link => {
+      link.classList.remove("active");
     });
   }
 
-  // Método público para navegar programáticamente
+  updateActiveNavLink(sectionId) {
+    const currentScroll = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    // Solo actualizar si no estamos en el tope ni en el final
+    const isAtTop = currentScroll <= this.topThreshold;
+    const isAtBottom = (currentScroll + windowHeight) >= (documentHeight - this.bottomThreshold);
+    
+    if (!isAtTop && !isAtBottom) {
+      this.navLinks.forEach(link => {
+        link.classList.toggle("active", link.dataset.section === sectionId);
+      });
+    }
+  }
+
+  // Métodos públicos para compatibilidad
   navigateTo(sectionId) {
     this.scrollToSection(sectionId);
   }
 
-  // Método para obtener la sección actual
   getCurrentSection() {
-    return this.currentSection;
+    // Retornar la sección actual basada en el scroll
+    const currentScroll = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    // No retornar sección si estamos en el tope o en el final
+    const isAtTop = currentScroll <= this.topThreshold;
+    const isAtBottom = (currentScroll + windowHeight) >= (documentHeight - this.bottomThreshold);
+    
+    if (isAtTop || isAtBottom) return null;
+    
+    for (const section of this.sections) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 100 && rect.bottom >= 100) {
+        return section.id;
+      }
+    }
+    return null;
+  }
+
+  // Método para limpiar recursos
+  destroy() {
+    // Remover event listeners de navegación
+    if (this.navLinks) {
+      this.navLinks.forEach(link => {
+        link.removeEventListener("click", this.handleNavClick);
+      });
+    }
+    
+    // Remover document click listener
+    if (this.handleDocumentClick) {
+      document.removeEventListener("click", this.handleDocumentClick);
+    }
+    
+    // Remover scroll listener
+    if (this.handleScroll) {
+      window.removeEventListener("scroll", this.handleScroll);
+    }
+    
+    // Limpiar observers
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    
+    // Limpiar referencias
+    this.navLinks = null;
+    this.sections = null;
+    this.observer = null;
+    this.handleNavClick = null;
+    this.handleDocumentClick = null;
+    this.handleScroll = null;
   }
 }
 
-// Inicializar cuando el DOM esté listo
-document.addEventListener("DOMContentLoaded", () => {
-  window.smoothScrollNav = new SmoothScrollNavigation();
-});
+// Función para limpiar instancias previas
+function cleanupSmoothScroll() {
+  if (window.smoothScrollNav) {
+    // Usar el método destroy para limpiar correctamente
+    window.smoothScrollNav.destroy();
+    window.smoothScrollNav = null;
+  }
+}
+
+// Inicializar solo cuando sea necesario (página principal con navegación)
+function initializeSmoothScroll() {
+  // Limpiar instancia previa si existe
+  cleanupSmoothScroll();
+  
+  // Solo inicializar si estamos en la página principal y hay elementos de navegación
+  const navLinks = document.querySelectorAll("[data-section]");
+  const sections = document.querySelectorAll("section[id]");
+  
+  // Verificar que estamos en una página con navegación
+  if (navLinks.length > 0 && sections.length > 0) {
+    window.smoothScrollNav = new SmoothScrollNavigation();
+  }
+}
+
+// Inicializar en DOMContentLoaded
+document.addEventListener("DOMContentLoaded", initializeSmoothScroll);
+
+// Limpiar en transiciones de Astro
+document.addEventListener("astro:before-swap", cleanupSmoothScroll);
+document.addEventListener("astro:page-load", initializeSmoothScroll);
 
 // Exportar para uso en otros scripts si es necesario
 if (typeof module !== "undefined" && module.exports) {

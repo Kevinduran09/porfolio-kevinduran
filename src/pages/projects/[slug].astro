@@ -1,13 +1,12 @@
 ---
 // src/pages/projects/[slug].astro
-import FrontendIcon from "../../components/icons/FrontendIcon.astro";
-import BackendIcon from "../../components/icons/BackendIcon.astro";
-import DatabaseIcon from "../../components/icons/DatabaseIcon.astro";
-import DeploymentIcon from "../../components/icons/DeploymentIcon.astro";
-import { getProjects, getProjectById } from "../../data/projects";
-import Layout from "../../layouts/Layout.astro";
-import Footer from "../../components/Footer.astro";
+import { getProjects, getProjectById } from "@/data/projects";
 
+import Layout from "@/layouts/Layout.astro";
+import Footer from "@/components/Footer.astro";
+import TechnicalSections from "@/sections/TechnicalSections.astro";
+
+// Generar rutas estáticas para todos los proyectos
 export async function getStaticPaths() {
   const projects = getProjects();
   return projects.map((project) => ({
@@ -15,56 +14,57 @@ export async function getStaticPaths() {
   }));
 }
 
+// Obtener datos del proyecto
 const { slug } = Astro.params;
 const project = getProjectById(slug as string);
 
 if (!project) {
   throw new Error("Proyecto no encontrado");
 }
+
+// Metadata del proyecto
 const title = `${project.title} | Proyecto`;
 const description = project.description;
-const sectionIcons = {
-  frontend: FrontendIcon,
-  backend: BackendIcon,
-  database: DatabaseIcon,
-  deployment: DeploymentIcon,
-};
+
+// Imagen principal del proyecto
+const mainImage = project.images?.[0] || "/coming-soon.webp";
 ---
 
 <Layout title={title} description={description}>
   <div class="min-h-screen bg-background">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
-      <!-- Header -->
-      <div class="mb-8">
+      <!-- Header del Proyecto -->
+      <header class="mb-8">
         <h1
           transition:name={`title-${project.title}`}
-          class="text-4xl font-bold mb-4"
+          class="text-4xl font-title font-black leading-none md:text-6xl lg:text-5xl 2xl:text-7xl mb-8"
         >
           {project.title}
         </h1>
+        <p class="text-2xl mb-3">
+          ¿Qué es {project.title}?
+        </p>
         <p class="text-lg text-neutral-300 leading-relaxed">
           {project.description}
         </p>
-      </div>
+      </header>
 
-      <!-- Image Carousel -->
-      <div class="mb-8 bg-neutral-900 rounded-xl shadow-lg overflow-hidden">
-        <div class="relative">
-          <div class="aspect-video relative overflow-hidden rounded-lg">
-            <img
-              transition:name={`image-${project.title}`}
-              src={project.images?.[0] || "/coming-soon.webp"}
-              alt={`Captura de pantalla 1 del proyecto`}
-              class="object-cover w-full h-full"
-              loading="lazy"
-            />
-          </div>
+      <!-- Imagen Principal -->
+      <section class="mb-8 bg-neutral-900 rounded-xl shadow-lg overflow-hidden">
+        <div class="aspect-video relative overflow-hidden rounded-lg">
+          <img
+            transition:name={`image-${project.title}`}
+            src={mainImage}
+            alt={`Imagen descriptiva del proyecto ${project.title}`}
+            class="object-cover w-full h-full"
+            loading="lazy"
+          />
         </div>
-      </div>
+      </section>
 
-      <!-- Technologies -->
-      <div class="mb-">
-        <div class="p-6">
+      <!-- Tecnologías Utilizadas -->
+      <section class="mb-8">
+        <div class="text-center">
           <h2 class="text-2xl font-bold mb-2">Tecnologías Utilizadas</h2>
           <p class="text-neutral-400 mb-4">
             Stack tecnológico empleado en el desarrollo del proyecto
@@ -74,43 +74,18 @@ const sectionIcons = {
               project.technologies.map((tech) => (
                 <img
                   class="size-12 hover:scale-125 transition-all hover:cursor-pointer"
-                  src={tech}
+                  src={tech.icon}
+                  alt={tech.alt}
+                  title={tech.name}
                 />
               ))
             }
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Technical Sections -->
-      <div class="space-y-6">
-        <h2 class="text-2xl font-bold mb-4">Aspectos Técnicos</h2>
-        {
-          project.sections?.map((section) => {
-            const Icon = sectionIcons[section.title];
-            return (
-              <div>
-                <div class="flex items-center gap-3 p-6 text-white capitalize">
-                  {Icon && <Icon className="h-6 w-6" />}
-                  <h3 class="text-2xl font-bold">{section.title}</h3>
-                </div>
-                <div class="p-6">
-                  <p class="text-neutral-300 text-lg leading-relaxed text-pretty">
-                    {section.description}
-                  </p>
-                  {section.image && (
-                    <img
-                      src={section.image}
-                      alt={`Imagen de la sección ${section.title}`}
-                      class="w-full h-auto rounded-lg border border-gray-300 mt-4"
-                    />
-                  )}
-                </div>
-              </div>
-            );
-          })
-        }
-      </div>
+      <!-- Secciones Técnicas -->
+      <TechnicalSections sections={project.sections || []} />
     </div>
   </div>
   <Footer />

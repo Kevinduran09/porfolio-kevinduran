@@ -17,7 +17,7 @@ export const technologies: Technology[] = [
   },
   {
     name: "JavaScript",
-    icon: "/tech-icons/javascript-original.svg",
+    icon: "/tech-icons/javascript.svg",
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
     color: "#f7df1e",
     category: "frontend",
@@ -38,7 +38,7 @@ export const technologies: Technology[] = [
   },
   {
     name: "Astro",
-    icon: "/tech-icons/astro-icon-light.svg",
+    icon: "/tech-icons/astro.svg",
     url: "https://astro.build",
     color: "#ff5d01",
     category: "frontend",
@@ -82,7 +82,7 @@ export const technologies: Technology[] = [
   },
   {
     name: "GraphQL",
-    icon: "/tech-icons/graphql-icon.svg",
+    icon: "/tech-icons/graphql.svg",
     url: "https://graphql.org",
     color: "#e10098",
     category: "backend",
