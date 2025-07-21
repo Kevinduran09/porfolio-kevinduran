@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build:preview": "npm run build && npm run preview"
   },
   "dependencies": {
     "@midudev/tailwind-animations": "^0.2.0",
