@@ -41,7 +41,7 @@ const {
 
 <script>
   // Función optimizada para cargar Lottie
-  async function loadLottieAnimation() {
+  async function loadLottieAnimation(container) {
     try {
       const lottie = await import("lottie-web");
 
@@ -86,7 +86,7 @@ const {
             }
           });
         },
-        { threshold: 0.1 },
+        { threshold: 0.1 }
       );
 
       observer.observe(container);
@@ -95,12 +95,22 @@ const {
     }
   }
 
-  // Cargar cuando el DOM esté listo
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", loadLottieAnimation);
-  } else {
-    loadLottieAnimation();
+  function initLottie() {
+    const container = document.getElementById("lottie-container");
+    if (container) loadLottieAnimation(container);
   }
+
+  // Inicialización al cargar
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLottie);
+  } else {
+    initLottie();
+  }
+
+  // Escuchar cuando Astro cambia de página (SPA)
+  window.addEventListener("astro:after-swap", () => {
+    initLottie();
+  });
 </script>
 
 <style>

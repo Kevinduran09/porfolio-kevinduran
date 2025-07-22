@@ -28,4 +28,5 @@ body {
       transform: translateX(calc(-120px *var(--tech-length)));
     }
   }
+
 }

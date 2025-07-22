@@ -28,7 +28,7 @@ class SmoothScrollNavigation {
     };
 
     // Interceptar clics en enlaces de navegación
-    this.navLinks.forEach(link => {
+    this.navLinks.forEach((link) => {
       link.addEventListener("click", this.handleNavClick);
     });
 
@@ -49,13 +49,14 @@ class SmoothScrollNavigation {
     if (!targetSection || this.isScrolling) return;
 
     this.isScrolling = true;
-    const headerHeight = document.getElementById("site-header")?.offsetHeight || 0;
+    const headerHeight =
+      document.getElementById("site-header")?.offsetHeight || 0;
     const targetPosition = targetSection.offsetTop - headerHeight - 20;
 
     this.smoothScrollTo(targetPosition, 600);
-    
+
     // Resetear flag después de completar
-    setTimeout(() => this.isScrolling = false, 600);
+    setTimeout(() => (this.isScrolling = false), 600);
   }
 
   smoothScrollTo(targetPosition, duration) {
@@ -67,7 +68,10 @@ class SmoothScrollNavigation {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
       // Easing cubic-bezier simplificado
-      const ease = progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      const ease =
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 
       window.scrollTo(0, startPosition + distance * ease);
 
@@ -78,18 +82,22 @@ class SmoothScrollNavigation {
   }
 
   setupIntersectionObserver() {
-    this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !this.isScrolling) {
-          this.updateActiveNavLink(entry.target.id);
-        }
-      });
-    }, { 
-      threshold: 0.3,
-      rootMargin: "0px 0px -10% 0px"
-    });
+    const threshold = window.innerWidth < 768 ? 0.1 : 0.3;
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.isScrolling) {
+            this.updateActiveNavLink(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold,
+        rootMargin: "0px -10% ",
+      }
+    );
 
-    this.sections.forEach(section => this.observer.observe(section));
+    this.sections.forEach((section) => this.observer.observe(section));
   }
 
   setupScrollHandler() {
@@ -109,8 +117,6 @@ class SmoothScrollNavigation {
     window.addEventListener("scroll", this.handleScroll, { passive: true });
   }
 
-
-
   checkTopPosition() {
     const currentScroll = window.scrollY;
     const isAtTop = currentScroll <= this.topThreshold;
@@ -124,9 +130,10 @@ class SmoothScrollNavigation {
     const currentScroll = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    
+
     // Calcular si estamos cerca del final de la página
-    const isAtBottom = (currentScroll + windowHeight) >= (documentHeight - this.bottomThreshold);
+    const isAtBottom =
+      currentScroll + windowHeight >= documentHeight - this.bottomThreshold;
 
     // Si estamos en el final, quitar todos los efectos active
     if (isAtBottom) {
@@ -135,7 +142,7 @@ class SmoothScrollNavigation {
   }
 
   clearAllActiveStates() {
-    this.navLinks.forEach(link => {
+    this.navLinks.forEach((link) => {
       link.classList.remove("active");
     });
   }
@@ -144,13 +151,14 @@ class SmoothScrollNavigation {
     const currentScroll = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    
+
     // Solo actualizar si no estamos en el tope ni en el final
     const isAtTop = currentScroll <= this.topThreshold;
-    const isAtBottom = (currentScroll + windowHeight) >= (documentHeight - this.bottomThreshold);
-    
+    const isAtBottom =
+      currentScroll + windowHeight >= documentHeight - this.bottomThreshold;
+
     if (!isAtTop && !isAtBottom) {
-      this.navLinks.forEach(link => {
+      this.navLinks.forEach((link) => {
         link.classList.toggle("active", link.dataset.section === sectionId);
       });
     }
@@ -166,13 +174,14 @@ class SmoothScrollNavigation {
     const currentScroll = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
-    
+
     // No retornar sección si estamos en el tope o en el final
     const isAtTop = currentScroll <= this.topThreshold;
-    const isAtBottom = (currentScroll + windowHeight) >= (documentHeight - this.bottomThreshold);
-    
+    const isAtBottom =
+      currentScroll + windowHeight >= documentHeight - this.bottomThreshold;
+
     if (isAtTop || isAtBottom) return null;
-    
+
     for (const section of this.sections) {
       const rect = section.getBoundingClientRect();
       if (rect.top <= 100 && rect.bottom >= 100) {
@@ -186,26 +195,26 @@ class SmoothScrollNavigation {
   destroy() {
     // Remover event listeners de navegación
     if (this.navLinks) {
-      this.navLinks.forEach(link => {
+      this.navLinks.forEach((link) => {
         link.removeEventListener("click", this.handleNavClick);
       });
     }
-    
+
     // Remover document click listener
     if (this.handleDocumentClick) {
       document.removeEventListener("click", this.handleDocumentClick);
     }
-    
+
     // Remover scroll listener
     if (this.handleScroll) {
       window.removeEventListener("scroll", this.handleScroll);
     }
-    
+
     // Limpiar observers
     if (this.observer) {
       this.observer.disconnect();
     }
-    
+
     // Limpiar referencias
     this.navLinks = null;
     this.sections = null;
@@ -229,11 +238,11 @@ function cleanupSmoothScroll() {
 function initializeSmoothScroll() {
   // Limpiar instancia previa si existe
   cleanupSmoothScroll();
-  
+
   // Solo inicializar si estamos en la página principal y hay elementos de navegación
   const navLinks = document.querySelectorAll("[data-section]");
   const sections = document.querySelectorAll("section[id]");
-  
+
   // Verificar que estamos en una página con navegación
   if (navLinks.length > 0 && sections.length > 0) {
     window.smoothScrollNav = new SmoothScrollNavigation();

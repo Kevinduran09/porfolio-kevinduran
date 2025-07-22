@@ -8,9 +8,7 @@ const imageUrl = project.imageUrl || DEFAULT_IMAGE;
 
 {
   project && (
-    <div
-      class={`relative cursor-pointer flex flex-col rounded-xl overflow-hidden shadow-xl bg-neutral-900 border border-neutral-700 hover:border-fuchsia-500 hover:scale-[1.03] transition-all duration-300 ${className}`}
-    >
+    <div class="relative flex flex-col  overflow-hidden  hover:scale-[1.02] transition-all duration-300 rounded-xl shadow-xl  bg-neutral-900 border border-neutral-700 hover:border-fuchsia-500 ">
       <a href={`/projects/${project.id}`}>
         <div class="relative w-full h-60  md:h-72 overflow-hidden">
           <img

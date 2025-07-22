@@ -5,6 +5,8 @@ import Github from "@/components/icons/Github.astro";
 import LinkedIn from "@/components/icons/LinkedIn.astro";
 import Mail from "@/components/icons/Gmail.astro";
 import { Image } from "astro:assets";
+import SectionLayout from "@/layouts/SectionLayout.astro";
+import Slogan from "@/components/Slogan.astro";
 
 const Personal_Information = {
   name: "Kevin Durán",
@@ -19,14 +21,12 @@ const Personal_Information = {
 };
 ---
 
-<section
-  class="max-w-screen-xl md:min-h-screen flex mx-auto md:w-5/6 lg:w-4/6 px-3 md:px-0 pt-36 md:pt-10"
->
+<SectionLayout id="hero" class="flex md:min-h-screen mt-16 md:mt-auto">
   <div
     class="flex flex-col lg:flex-row items-center justify-center px-3 md:px-0"
   >
     <!-- Imagen -->
-    <div class="lg:w-1/2 lg:order-last order-first grid place-items-end">
+    <div class="w-3/4 lg:w-1/2 lg:order-last order-first grid place-items-end">
       <Image
         src="/kevinduran-hero-neo.webp"
         alt="Kevin Durán"
@@ -45,12 +45,15 @@ const Personal_Information = {
         >
           {Personal_Information.name}
         </h1>
+        <!-- <Slogan /> -->
 
-        <p
-          class="mb-4 mt-2 lg:mt-0 text-2xl font-semibold font-secundary leading-none md:text-3xl lg:text-4xl text-fuchsia-600"
-        >
-          {Personal_Information.titles[0]}
-        </p>
+        <div class="block w-fit mx-auto md:mx-0">
+          <div
+            class="mb-4 mt-2 lg:mt-0 text-2xl md:text-3xl lg:text-4xl text-fuchsia-600 animate- whitespace-nowrap border-r overflow-hidden w-fit"
+          >
+            {Personal_Information.titles[0]}
+          </div>
+        </div>
         <p
           class="mb-6 text-lg font-normal text-grisclaro2 md:text-base 2xl:text-xl [text-wrap:balance]"
         >
@@ -86,4 +89,4 @@ const Personal_Information = {
       </div>
     </div>
   </div>
-</section>
+</SectionLayout>

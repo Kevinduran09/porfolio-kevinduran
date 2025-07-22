@@ -1,0 +1,76 @@
+---
+const slogans = [
+  "Ingeniero en sistemas",
+  "Desarrollador de software",
+  "Apasionado por la tecnología",
+  "Constante Aprendizaje",
+];
+---
+
+<div class="wrapper block w-fit mx-auto md:mx-0">
+  <ol class="">
+    {
+      slogans.map((slogan) => (
+        <li class="">
+          <span class="lg:mt-0 text-2xl md:text-3xl lg:text-4xl">{slogan}</span>
+        </li>
+      ))
+    }
+  </ol>
+
+  <style>
+    .wrapper {
+      --height: 3.8rem;
+      max-height: var(--height);
+    }
+    .wrapper ol li span {
+      --height: 3.8rem;
+      height: var(--height);
+      max-height: var(--height);
+      font-weight: 600;
+      -webkit-text-fill-color: transparent;
+      background: linear-gradient(20deg, rgb(219, 15, 174), rgb(205, 4, 255));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .wrapper ol {
+      --height: 3.8rem;
+      height: var(--height);
+      line-height: var(--height);
+      overflow: hidden;
+    }
+    .wrapper ol li {
+      --height: 3.8rem;
+      height: var(--height);
+      max-height: var(--height);
+      animation: slide-up 20s ease-in-out infinite;
+    }
+    @keyframes slide-up {
+      0%,
+      10% {
+        transform: translateY(0%);
+      }
+      15%,
+      25% {
+        transform: translateY(-100%);
+      }
+      30%,
+      40% {
+        transform: translateY(-200%);
+      }
+      45%,
+      55% {
+        transform: translateY(-300%);
+      }
+    }
+  </style>
+  <script type="module">
+    const wrapper = document.querySelector(".wrapper ol");
+    const firstLi = wrapper.querySelector("li");
+    if (firstLi && wrapper) {
+      const h = firstLi.getBoundingClientRect().height;
+      wrapper.style.height = `${h}px`;
+    }
+  </script>
+</div>

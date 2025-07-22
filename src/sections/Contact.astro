@@ -1,9 +1,11 @@
 ---
+import SectionLayout from "@/layouts/SectionLayout.astro";
+
 // Componente Contact básico
 const emailAdress = "kduran.091001@gmail.com";
 ---
 
-<section class="max-w-screen-xl mx-auto md:w-5/6 lg:w-4/6 px-3 md:px-0 pt-10">
+<SectionLayout id="contact">
   <div class="md:px-34 py-28">
     <div class="w-full text-center my-10">
       <span class="text-4xl font-bold">
@@ -69,4 +71,4 @@ const emailAdress = "kduran.091001@gmail.com";
       });
     }
   </script>
-</section>
+</SectionLayout>

@@ -1,0 +1,164 @@
+---
+// src/pages/projects/index.astro
+import BentoCard from "@/components/BentoCard.astro";
+import { getProjects } from "@/data/projects";
+import ProjectsIcon from "@/components/icons/ProjectsIcon.astro";
+import SectionLayout from "@/layouts/SectionLayout.astro";
+
+const projects = getProjects();
+---
+
+<SectionLayout id="projects">
+  <h2
+    id="projects-title"
+    class="opacity-0 w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
+  >
+    <ProjectsIcon />
+    Proyectos
+  </h2>
+
+  <div
+    class="flex flex-col gap-2 sm:grid sm:grid-cols-2 md:grid-cols-4 sm:grid-rows-3 sm:auto-rows-[160px] md:auto-rows-[200px]"
+  >
+    <div
+      id="projects-welcome"
+      class="opacity-0 sm:col-span-2 sm:row-span-2 flex flex-col justify-center items-center bg-gradient-to-br from-fuchsia-700/80 to-fuchsia-400/80 rounded-xl shadow-xl p-4 sm:p-8 text-white"
+    >
+      <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-center">
+        ¡Bienvenido!
+      </h3>
+      <p class="text-base sm:text-lg md:text-xl text-center">
+        Explora mis mejores proyectos destacados y conoce más sobre mi trabajo.
+      </p>
+    </div>
+
+    {
+      projects.slice(0, 5).map((project, idx) => (
+        <div
+          class={`bento opacity-0 ${
+            idx === 0
+              ? "col-span-1 sm:col-span-2 row-span-1"
+              : idx === 3 || idx === 4
+                ? "col-span-1 sm:col-span-2 row-span-1"
+                : "col-span-1 row-span-1"
+          }`}
+          data-index={idx}
+        >
+          <BentoCard
+            project={{
+              id: project.id,
+              title: project.title,
+              description: project.description,
+              shortDescription: project.description.slice(0, 80) + "...",
+              imageUrl: project.images[0],
+            }}
+          />
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- <style>
+    .bento {
+      animation: pop-int 4s ease-in-out infinite;
+    }
+    @keyframes pop-int {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      75% {
+        transform: scale(0.94);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style> -->
+  <script type="module">
+    import {
+      animate,
+      stagger,
+    } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
+    function startProjectAnimations() {
+      // 1. Animar título
+      animate(
+        "#projects-title",
+        { opacity: [0, 1], transform: ["translateX(50px)", "translateX(0)"] },
+        {
+          duration: 0.8,
+          easing: "ease-out",
+        }
+      );
+
+      // 2. Animar bienvenida después
+      setTimeout(() => {
+        animate(
+          "#projects-welcome",
+          { opacity: [0, 1], scale: [0.85, 1] },
+          {
+            duration: 0.9,
+            easing: "ease-out",
+          }
+        );
+      }, 800);
+
+      // 3. Activar observer para las bento (por visibilidad individual)
+      setTimeout(() => {
+        animateVisibleBentos();
+      }, 1600);
+    }
+
+    function animateVisibleBentos() {
+      const elements = document.querySelectorAll(".bento");
+
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animate(
+                entry.target,
+                { scale: [0.75, 1.05, 0.94, 1], opacity: [0, 1] },
+                {
+                  delay: stagger(0.5, {
+                    startDelay: entry.target.dataset.index * 0.3,
+                  }),
+                  duration: 1.2,
+                  easing: "ease-in-out",
+                }
+              );
+              obs.unobserve(entry.target); // Solo una vez
+            }
+          });
+        },
+        {
+          threshold: 0.3,
+        }
+      );
+
+      elements.forEach((el) => observer.observe(el));
+    }
+
+    // Observer que activa todo cuando la sección es visible
+    const section = document.querySelector("#projects");
+    if (section) {
+      const sectionObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              startProjectAnimations();
+              observer.unobserve(entry.target); // Solo se ejecuta una vez
+            }
+          });
+        },
+        {
+          threshold: 0.2, // puedes ajustar cuánto del bloque debe ser visible
+        }
+      );
+
+      sectionObserver.observe(section);
+    }
+  </script>
+</SectionLayout>

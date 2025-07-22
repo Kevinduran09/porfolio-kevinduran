@@ -20,7 +20,7 @@ const navItems = [
 ];
 ---
 
-<header id="site-header" class="header">
+<header id="site-header" class="header top-0 md:bottom-8 md:top-auto">
   <nav class="nav bg-slate-800 backgorund-blur-sm rounded-full py-3 px-5">
     <ul class="nav-list">
       {
@@ -54,7 +54,6 @@ const navItems = [
       transition: all 0.5s ease-in-out;
       animation: slideDownFade 0.8s ease-out;
     }
-
 
     .nav-list {
       display: flex;
@@ -106,7 +105,6 @@ const navItems = [
     }
     @media (min-width: 768px) {
       .header {
-        bottom: 2rem;
         animation: slideInUp 0.8s ease-out forwards;
       }
       .nav-icon {

@@ -3,14 +3,10 @@ import { getPersonalInformation } from "@/data/portfolioData";
 import LottiePlayer from "@/components/LottiePlayer.astro";
 import PersonIcon from "@/components/icons/PersonIcon.astro";
 import TechCarousel from "@/components/TechCarousel.astro";
-
-
+import SectionLayout from "@/layouts/SectionLayout.astro";
 ---
 
-<section
-  id="aboutme"
-  class="section scroll-m-20 max-w-screen-xl mx-auto md:w-5/6 lg:w-4/6 px-3 md:px-0 pt-10"
->
+<SectionLayout id="aboutme" class="section">
   <h2
     class="text-center text-4xl font-bold flex justify-center items-center gap-3 mb-8 text-white"
   >
@@ -47,7 +43,7 @@ import TechCarousel from "@/components/TechCarousel.astro";
       </p>
     </div>
 
-    <div class="order-2 md:order-2 w-64 h-full">
+    <div class="order-2 md:order-2 h-full">
       <LottiePlayer
         class="mi-clase-personalizada"
         width="300px"
@@ -65,4 +61,4 @@ import TechCarousel from "@/components/TechCarousel.astro";
     </h3>
     <TechCarousel />
   </div>
-</section>
+</SectionLayout>

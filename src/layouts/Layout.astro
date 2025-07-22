@@ -1,11 +1,12 @@
 ---
+import Header from "@/components/Header.astro";
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="w-full min-w-full">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="generator" content={Astro.generator} />
@@ -46,12 +47,11 @@ const { title, description } = Astro.props;
           </div>
         </div>
       </div>
-
-      <div class="relative z-10">
-        <main>
-          <slot />
-        </main>
-      </div>
+    </div>
+    <div class="relative z-10">
+      <main>
+        <slot />
+      </main>
     </div>
   </body>
 </html>

@@ -1,7 +1,6 @@
 ---
 // src/pages/projects/[slug].astro
 import { getProjects, getProjectById } from "@/data/projects";
-
 import Layout from "@/layouts/Layout.astro";
 import Footer from "@/components/Footer.astro";
 import TechnicalSections from "@/sections/TechnicalSections.astro";
@@ -73,10 +72,10 @@ const mainImage = project.images?.[0] || "/coming-soon.webp";
             {
               project.technologies.map((tech) => (
                 <img
-                  class="size-12 hover:scale-125 transition-all hover:cursor-pointer"
+                  class="size-12 tech-li"
                   src={tech.icon}
                   alt={tech.alt}
-                  title={tech.name}
+                  loading="lazy"
                 />
               ))
             }
@@ -89,4 +88,24 @@ const mainImage = project.images?.[0] || "/coming-soon.webp";
     </div>
   </div>
   <Footer />
+
+  <script type="module">
+    import {
+      animate,
+      stagger,
+    } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
+
+    // Aplicar animación infinita tipo "bombeo" a los íconos de tecnología
+    animate(
+      ".tech-li",
+      { y: [0, -20, 0] }, // subir 30px y volver a inicio
+      {
+        delay: stagger(0.4, { startDelay: 0.3 }), // 0.4s de retraso por elemento
+        duration: 0.8, // tiempo de subida/bajada
+        ease: "easeInOut", // suavidad natural
+        repeat: Infinity,
+        repeatDelay: 2, // sin pausa general
+      }
+    );
+  </script>
 </Layout>
