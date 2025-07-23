@@ -6,8 +6,14 @@ import SectionLayout from "@/layouts/SectionLayout.astro";
 const emailAdress = "kduran.091001@gmail.com";
 ---
 
-<SectionLayout id="contact">
-  <AnimationDiv direction="bottom" delay={0} duration={2} thershold={3.0}>
+<SectionLayout id="contact" class="">
+  <AnimationDiv
+    id="cont-content"
+    direction="bottom"
+    delay={1}
+    duration={2.5}
+    thershold={20}
+  >
     <div class="md:px-34 py-28">
       <div class="w-full text-center my-10">
         <span class="text-4xl font-bold">

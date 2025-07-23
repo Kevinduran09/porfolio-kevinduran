@@ -15,8 +15,8 @@ const Personal_Information = {
     "https://www.linkedin.com/in/kevin-dur%C3%A1n-mart%C3%ADnez-1b6868151/",
   email: "kevin.duran@email.com",
   titles: [
-    "Desarrollador Full Stack",
     "Ingeniero de Software",
+    "Desarrollador Full Stack",
     "Apasionado por la tecnología",
   ],
 };
@@ -28,7 +28,7 @@ const Personal_Information = {
   >
     <!-- Imagen -->
     <div class="w-3/4 lg:w-1/2 lg:order-last order-first grid place-items-end">
-      <AnimationDiv delay={1} duration={3}>
+      <AnimationDiv delay={0.8} duration={1.5} id="hero-img">
         <Image
           src="/kevinduran-hero-neo.webp"
           alt="Kevin Durán"
@@ -41,7 +41,12 @@ const Personal_Information = {
 
     <!-- Texto -->
     <div class="lg:w-1/2 lg:order-first order-last">
-      <AnimationDiv direction="left" duration={3} delay={2}>
+      <AnimationDiv
+        direction="left"
+        duration={2}
+        delay={1}
+        id="hero-text-content"
+      >
         <div class="text-center md:text-center lg:text-left w-full">
           <p class="mb-3 text-3xl leading-none text-fuchsia-600">Hola soy</p>
           <h1

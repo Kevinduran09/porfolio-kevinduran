@@ -9,7 +9,13 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 ---
 
 <SectionLayout id="experience" class="mt-8">
-  <AnimationDiv direction="right" delay={0} duration={2} thershold={3.0}>
+  <AnimationDiv
+    id="exp-title"
+    direction="right"
+    delay={0}
+    duration={2}
+    thershold={3.0}
+  >
     <h2
       class="w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
     >
@@ -24,9 +30,11 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
         .sort((a, b) => a.order - b.order)
         .map((exp, idx) => (
           <AnimationDiv
-            delay={idx * 0.5}
+            id={`exp-li-${idx}`}
+            delay={0.5}
             direction={idx % 2 ? "left" : "right"}
-            duration={2}
+            duration={0.8}
+            thershold={36}
           >
             <ExperienceItem
               {...exp}

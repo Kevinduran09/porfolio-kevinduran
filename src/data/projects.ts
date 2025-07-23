@@ -82,7 +82,7 @@ export const projects: Project[] = [
       { name: "Firebase", ...techIcons.Firebase },
       { name: "Supabase", ...techIcons.Supabase },
     ],
-    images: [],
+    images: ["/ecoscan.png"],
     sections: [
       {
         title: "Frontend Móvil",
@@ -111,6 +111,59 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "api-animes",
+    title: "API ANIMES - React Project",
+    description: `Esta aplicación web desarrollada en React consume la API de Jikan (no oficial de MyAnimeList), permitiendo explorar animes populares, ver detalles, sinopsis, tráileres y más. Fue diseñada con enfoque en aprender el uso de PWAs y trabajar con una API pública.`,
+    images: [],
+    technologies: [
+      { name: "React", ...techIcons.React },
+      { name: "TailwindCSS", ...techIcons.TailwindCSS },
+      { name: "JavaScript", ...techIcons.JavaScript },
+      { name: "PWA", ...techIcons.PWA },
+    ],
+    sections: [
+      {
+        title: "Frontend",
+        slug: "frontend",
+        description: `Aplicación construida en React, utilizando React Router para navegación, styled-components para los estilos y Axios para consumir la API. Está optimizada como una Progressive Web App (PWA), implementando un Service Worker que permite funcionalidades offline, instalación en dispositivos y mejora de rendimiento general. La configuración incluye manifest.json y cacheo de recursos estáticos mediante el SW.`,
+      },
+    ],
+  },
+  {
+    id: "mypms",
+    title: "MYPIMES",
+    description:
+      "MYPIMES es una iniciativa desarrollada junto a la organización CEMEDE, enfocada en brindar soluciones digitales a pequeñas y medianas empresas en Costa Rica. La plataforma permite gestionar información empresarial y aplicar formularios personalizados, fortaleciendo la digitalización del sector PYME.",
+    technologies: [
+      { name: "React", ...techIcons.React },
+      { name: "NestJS", ...techIcons.NestJS },
+      { name: "MySQL", ...techIcons.MySQL },
+      { name: "JavaScript", ...techIcons.JavaScript },
+    ],
+    images: ["/CEMEDE.webp"],
+    sections: [
+      {
+        title: "Frontend",
+        slug: "frontend",
+        description:
+          "Desarrollado con React, MIUI y React Hook Form para crear interfaces responsivas y formularios eficientes. Utiliza TanStack Query y Zustand para el manejo óptimo del estado global.",
+      },
+      {
+        title: "Backend",
+        slug: "backend",
+        description:
+          "Construido con NestJS bajo una arquitectura modular, separando controladores, servicios, entidades y DTOs. Se implementa autenticación con JWT para rutas protegidas y control de sesiones.",
+      },
+      {
+        title: "Base de Datos y Despliegue",
+        slug: "database",
+        description:
+          "Utiliza MySQL como sistema de base de datos relacional y se encuentra desplegada en Netlify, permitiendo acceso rápido y seguro desde cualquier parte.",
+      },
+    ],
+  },
+
+  {
     id: "remesas-yabi",
     title: "Remesas Yabí",
     description:
@@ -120,7 +173,7 @@ export const projects: Project[] = [
       { name: "JavaScript", ...techIcons.JavaScript },
       { name: "NodeJS", ...techIcons.NodeJS },
     ],
-    images: [],
+    images: ["/Yabi_captura.webp"],
     sections: [
       {
         title: "Frontend",
@@ -146,58 +199,6 @@ export const projects: Project[] = [
         slug: "backend",
         description:
           "El sistema genera rutas optimizadas considerando los servicios del día, vehículos disponibles y encargados asignados, evitando solapamientos y asegurando eficiencia.",
-      },
-    ],
-  },
-  {
-    id: "mypms",
-    title: "MYPIMES",
-    description:
-      "MYPIMES es una iniciativa desarrollada junto a la organización CEMEDE, enfocada en brindar soluciones digitales a pequeñas y medianas empresas en Costa Rica. La plataforma permite gestionar información empresarial y aplicar formularios personalizados, fortaleciendo la digitalización del sector PYME.",
-    technologies: [
-      { name: "React", ...techIcons.React },
-      { name: "NestJS", ...techIcons.NestJS },
-      { name: "MySQL", ...techIcons.MySQL },
-      { name: "JavaScript", ...techIcons.JavaScript },
-    ],
-    images: [],
-    sections: [
-      {
-        title: "Frontend",
-        slug: "frontend",
-        description:
-          "Desarrollado con React, MIUI y React Hook Form para crear interfaces responsivas y formularios eficientes. Utiliza TanStack Query y Zustand para el manejo óptimo del estado global.",
-      },
-      {
-        title: "Backend",
-        slug: "backend",
-        description:
-          "Construido con NestJS bajo una arquitectura modular, separando controladores, servicios, entidades y DTOs. Se implementa autenticación con JWT para rutas protegidas y control de sesiones.",
-      },
-      {
-        title: "Base de Datos y Despliegue",
-        slug: "database",
-        description:
-          "Utiliza MySQL como sistema de base de datos relacional y se encuentra desplegada en Netlify, permitiendo acceso rápido y seguro desde cualquier parte.",
-      },
-    ],
-  },
-  {
-    id: "api-animes",
-    title: "API ANIMES - React Project",
-    description: `Esta aplicación web desarrollada en React consume la API de Jikan (no oficial de MyAnimeList), permitiendo explorar animes populares, ver detalles, sinopsis, tráileres y más. Fue diseñada con enfoque en aprender el uso de PWAs y trabajar con una API pública.`,
-    images: [],
-    technologies: [
-      { name: "React", ...techIcons.React },
-      { name: "TailwindCSS", ...techIcons.TailwindCSS },
-      { name: "JavaScript", ...techIcons.JavaScript },
-      { name: "PWA", ...techIcons.PWA },
-    ],
-    sections: [
-      {
-        title: "Frontend",
-        slug: "frontend",
-        description: `Aplicación construida en React, utilizando React Router para navegación, styled-components para los estilos y Axios para consumir la API. Está optimizada como una Progressive Web App (PWA), implementando un Service Worker que permite funcionalidades offline, instalación en dispositivos y mejora de rendimiento general. La configuración incluye manifest.json y cacheo de recursos estáticos mediante el SW.`,
       },
     ],
   },

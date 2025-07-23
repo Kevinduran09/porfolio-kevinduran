@@ -9,7 +9,13 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 ---
 
 <SectionLayout id="aboutme" class="section lg:mt-8">
-  <AnimationDiv direction="right" delay={0} duration={2} thershold={9}>
+  <AnimationDiv
+    id="abt-title"
+    direction="right"
+    delay={1.5}
+    duration={2}
+    thershold={9}
+  >
     <h2
       class="text-center text-4xl font-bold flex justify-center items-center gap-3 mb-8 text-white"
     >
@@ -18,9 +24,15 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
     </h2>
   </AnimationDiv>
 
-  <AnimationDiv delay={0.4} direction="bottom" duration={2} thershold={9}>
-    <div
-      class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start"
+  <div
+    class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start"
+  >
+    <AnimationDiv
+      id="abt-content"
+      delay={1.5}
+      direction="bottom"
+      duration={2}
+      thershold={3}
     >
       <div
         class="[&>p]:mb-4 [&>p>strong]:bg-fuchsia-600 [&>p>strong]:py-0.5 [&>p>strong]:px-1 [&>p>strong]:text-zinc-100/80 text-pretty order-1 md:order-1 text-lg"
@@ -46,9 +58,40 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
           >, en constante búsqueda de nuevos desafíos que impulsen mi
           crecimiento y el de quienes usan la tecnología que construyo.
         </p>
+        <div class="flex mt-6">
+          <a
+            target="_blank"
+            href="/Curriculum vitae Kevin Andrey Duran Martinez.pdf"
+            download
+            class="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-fuchsia-700 hover:bg-fuchsia-600 text-white font-semibold shadow-lg transition-colors text-lg"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 16V4m0 12l-4-4m4 4l4-4m-8 8h8"></path>
+            </svg>
+            Descargar CV
+          </a>
+        </div>
       </div>
+    </AnimationDiv>
 
-      <div class="order-2 md:order-2 h-full">
+    <div class="order-2 md:order-2 h-full">
+      <AnimationDiv
+        id="lot-ani"
+        delay={1}
+        direction="bottom"
+        duration={2}
+        thershold={0.3}
+      >
         <LottiePlayer
           class="mi-clase-personalizada"
           width="300px"
@@ -57,10 +100,9 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
           loop={true}
           speed={1}
         />
-      </div>
+      </AnimationDiv>
     </div>
-  </AnimationDiv>
-
+  </div>
   <div class="mt-10">
     <h3 class="text-2xl font-bold text-fuchsia-400 mb-4 text-center">
       Tecnologías
