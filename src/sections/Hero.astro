@@ -7,6 +7,7 @@ import Mail from "@/components/icons/Gmail.astro";
 import { Image } from "astro:assets";
 import SectionLayout from "@/layouts/SectionLayout.astro";
 import Slogan from "@/components/Slogan.astro";
+import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 
 const Personal_Information = {
   name: "Kevin Durán",
@@ -23,70 +24,102 @@ const Personal_Information = {
 
 <SectionLayout id="hero" class="flex md:min-h-screen mt-16 md:mt-auto">
   <div
-    class="flex flex-col lg:flex-row items-center justify-center px-3 md:px-0"
+    class="flex flex-col gap-0 lg:gap-5 xl:gap-0 lg:flex-row items-center justify-center px-3 md:px-0"
   >
     <!-- Imagen -->
     <div class="w-3/4 lg:w-1/2 lg:order-last order-first grid place-items-end">
-      <Image
-        src="/kevinduran-hero-neo.webp"
-        alt="Kevin Durán"
-        width={398}
-        height={398}
-        class="object-cover rounded-full w-full h-full"
-      />
+      <AnimationDiv delay={1} duration={3}>
+        <Image
+          src="/kevinduran-hero-neo.webp"
+          alt="Kevin Durán"
+          width={398}
+          height={398}
+          class="object-cover rounded-full w-full h-full"
+        />
+      </AnimationDiv>
     </div>
 
     <!-- Texto -->
     <div class="lg:w-1/2 lg:order-first order-last">
-      <div class="text-center md:text-left w-full">
-        <p class="mb-3 text-3xl leading-none text-fuchsia-600">Hola soy</p>
-        <h1
-          class="mb-4 text-4xl font-title font-black leading-none md:text-6xl lg:text-5xl 2xl:text-7xl text-white"
-        >
-          {Personal_Information.name}
-        </h1>
-        <!-- <Slogan /> -->
-
-        <div class="block w-fit mx-auto md:mx-0">
-          <div
-            class="mb-4 mt-2 lg:mt-0 text-2xl md:text-3xl lg:text-4xl text-fuchsia-600 animate- whitespace-nowrap border-r overflow-hidden w-fit"
+      <AnimationDiv direction="left" duration={3} delay={2}>
+        <div class="text-center md:text-center lg:text-left w-full">
+          <p class="mb-3 text-3xl leading-none text-fuchsia-600">Hola soy</p>
+          <h1
+            class="mb-4 text-4xl font-title font-black leading-none md:text-6xl lg:text-5xl 2xl:text-7xl text-white"
           >
-            {Personal_Information.titles[0]}
+            {Personal_Information.name}
+          </h1>
+          <!-- <Slogan /> -->
+
+          <div class="tex-center w-full md:mx-0">
+            <div
+              class="mb-4 mt-2 lg:mt-0 text-2xl md:text-3xl lg:text-4xl text-fuchsia-600 font-semibold overflow-hidden"
+            >
+              {Personal_Information.titles[0]}
+            </div>
           </div>
+          <p
+            class="mb-6 text-lg font-normal text-grisclaro2 md:text-base 2xl:text-xl [text-wrap:balance]"
+          >
+            Apasionado por los desafíos que impulsan mi crecimiento.
+            Comprometido con el desarrollo de soluciones escalables y de alta
+            calidad.
+          </p>
         </div>
-        <p
-          class="mb-6 text-lg font-normal text-grisclaro2 md:text-base 2xl:text-xl [text-wrap:balance]"
+        <div
+          class="flex flex-row mt-6 text-sm items-center gap-2 md:gap-3
+        justify-center lg:justify-start"
         >
-          Apasionado por los desafíos que impulsan mi crecimiento. Comprometido
-          con el desarrollo de soluciones escalables y de alta calidad.
-        </p>
-      </div>
-      <div
-        class="flex flex-row mt-6 text-sm items-center gap-2 md:gap-3
-        justify-center md:justify-start"
-      >
-        <a
-          href="https://github.com/Kevinduran09"
-          class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
-        >
-          <Github class="size-5 md:size-6" />
-          <span>GitHub</span>
-        </a>
-        <a
-          href={Personal_Information.linkedin}
-          class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
-        >
-          <LinkedIn class="size-5 md:size-6" />
-          <span>LinkedIn</span>
-        </a>
-        <a
-          href={`mailto:${Personal_Information.email}`}
-          class="bg-fuchsia-700 hover:bg-fuchsia-600 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
-        >
-          <span>Contactame</span>
-          <Mail class="size-5 md:size-6" />
-        </a>
-      </div>
+          <a
+            href="https://github.com/Kevinduran09"
+            class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
+          >
+            <Github class="size-5 md:size-6" />
+            <span>GitHub</span>
+          </a>
+          <a
+            href={Personal_Information.linkedin}
+            class="bg-gray-800 hover:bg-gray-700 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
+          >
+            <LinkedIn class="size-5 md:size-6" />
+            <span>LinkedIn</span>
+          </a>
+          <a
+            href={`mailto:${Personal_Information.email}`}
+            class="bg-fuchsia-700 hover:bg-fuchsia-600 flex items-center gap-2 px-2 md:px-4 py-2 rounded transition-colors"
+          >
+            <span>Contactame</span>
+            <Mail class="size-5 md:size-6" />
+          </a>
+        </div>
+      </AnimationDiv>
     </div>
   </div>
+
+  <!-- <script type="module">
+    import {
+      animate,
+      stagger,
+    } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
+    const transformAnimation =
+      window.innerWidth < 768
+        ? ["translateX(200px)", " translateX(0)"]
+        : ["translateX(-200px)", " translateX(0)"];
+    animate(
+      "#hero-image",
+      { opacity: [0, 1] },
+      { duration: 3, easing: "ease-out", delay: 1 }
+    );
+
+    setTimeout(() => {
+      animate(
+        "#hero-text-content",
+        {
+          opacity: [0, 1],
+          transform: transformAnimation,
+        },
+        { duration: 1.8 }
+      );
+    }, 1500);
+  </script> -->
 </SectionLayout>

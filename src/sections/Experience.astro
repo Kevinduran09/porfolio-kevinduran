@@ -4,26 +4,36 @@ import { experience } from "@/data/experience";
 import ExperienceItem from "@/components/ExperienceItem.astro";
 import ExperienceIcon from "@/components/icons/ExperienceIcon.astro";
 import SectionLayout from "@/layouts/SectionLayout.astro";
+import AnimatedText from "@/components/animations/AnimatedText.astro";
+import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 ---
 
 <SectionLayout id="experience" class="mt-8">
-  <h2
-    class="w-full flex justify-center items-center gap-x-3 text-4xl font-semibold my-6 text-center"
-  >
-    <ExperienceIcon />
-    Experiencia
-  </h2>
+  <AnimationDiv direction="right" delay={0} duration={2} thershold={3.0}>
+    <h2
+      class="w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
+    >
+      <ExperienceIcon />
+      Experiencia
+    </h2>
+  </AnimationDiv>
 
-  <div>
+  <div class="mt-12">
     {
       experience
         .sort((a, b) => a.order - b.order)
         .map((exp, idx) => (
-          <ExperienceItem
-            {...exp}
-            icon={GraduationCap}
-            isLast={idx === experience.length - 1}
-          />
+          <AnimationDiv
+            delay={idx * 0.5}
+            direction={idx % 2 ? "left" : "right"}
+            duration={2}
+          >
+            <ExperienceItem
+              {...exp}
+              icon={GraduationCap}
+              isLast={idx === experience.length - 1}
+            />
+          </AnimationDiv>
         ))
     }
   </div>

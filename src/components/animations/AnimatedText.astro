@@ -1,0 +1,61 @@
+---
+interface Props {
+  id?: string;
+  direction?: "left" | "right" | "top" | "bottom";
+  delay?: number;
+  duration?: number;
+}
+
+const {
+  id = "animated-title",
+  direction = "right",
+  delay = 0,
+  duration = 0.8,
+} = Astro.props;
+
+const transformStart = {
+  right: "translateX(50px)",
+  left: "translateX(-50px)",
+  top: "translateY(-50px)",
+  bottom: "translateY(50px)",
+}[direction];
+---
+
+<h2
+  id={id}
+  class="opacity-0 w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
+>
+  <slot />
+</h2>
+
+<script type="module" define:vars={{ id, transformStart, delay, duration }}>
+  import { animate } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
+
+  const el = document.getElementById(id);
+  if (el) {
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animate(
+              el,
+              {
+                opacity: [0, 1],
+                transform: [transformStart, "none"],
+              },
+              {
+                duration,
+                delay,
+                easing: "ease-out",
+              }
+            );
+            observer.unobserve(entry.target); // solo se anima una vez
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(el);
+  }
+</script>

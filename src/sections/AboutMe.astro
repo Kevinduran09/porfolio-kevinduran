@@ -4,56 +4,62 @@ import LottiePlayer from "@/components/LottiePlayer.astro";
 import PersonIcon from "@/components/icons/PersonIcon.astro";
 import TechCarousel from "@/components/TechCarousel.astro";
 import SectionLayout from "@/layouts/SectionLayout.astro";
+import AnimatedText from "@/components/animations/AnimatedText.astro";
+import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 ---
 
-<SectionLayout id="aboutme" class="section">
-  <h2
-    class="text-center text-4xl font-bold flex justify-center items-center gap-3 mb-8 text-white"
-  >
-    <PersonIcon />
-    Sobre Mí
-  </h2>
-
-  <div
-    class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start"
-  >
-    <div
-      class="[&>p]:mb-4 [&>p>strong]:bg-fuchsia-600 [&>p>strong]:py-0.5 [&>p>strong]:px-1 [&>p>strong]:text-zinc-100/80 text-pretty order-1 md:order-1 text-lg"
+<SectionLayout id="aboutme" class="section lg:mt-8">
+  <AnimationDiv direction="right" delay={0} duration={2} thershold={9}>
+    <h2
+      class="text-center text-4xl font-bold flex justify-center items-center gap-3 mb-8 text-white"
     >
-      <p>
-        Soy Kevin Andrey Durán Martínez, estudiante de Ingeniería en Sistemas de
-        Información y desarrollador de software <strong
-          >con pasión por la tecnología, la innovación y el aprendizaje
-          continuo.</strong
-        >
-      </p>
-      <p>
-        Me especializo en crear soluciones modernas, escalables y centradas en
-        resolver problemas reales, aplicando buenas prácticas y priorizando la
-        calidad. <strong>He participado en proyectos como MYPIMES</strong>, una
-        plataforma para la encuestación y diagnóstico digital de pequeñas y
-        medianas empresas en Costa Rica, desarrollada en colaboración con
-        CEMEDE.
-      </p>
-      <p>
-        Me defino como una persona <strong
-          >responsable, proactiva y comprometida</strong
-        >, en constante búsqueda de nuevos desafíos que impulsen mi crecimiento
-        y el de quienes usan la tecnología que construyo.
-      </p>
-    </div>
+      <PersonIcon />
+      Acerca de mi
+    </h2>
+  </AnimationDiv>
 
-    <div class="order-2 md:order-2 h-full">
-      <LottiePlayer
-        class="mi-clase-personalizada"
-        width="300px"
-        height="300px"
-        autoplay={true}
-        loop={true}
-        speed={1}
-      />
+  <AnimationDiv delay={0.4} direction="bottom" duration={2} thershold={9}>
+    <div
+      class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center lg:items-start"
+    >
+      <div
+        class="[&>p]:mb-4 [&>p>strong]:bg-fuchsia-600 [&>p>strong]:py-0.5 [&>p>strong]:px-1 [&>p>strong]:text-zinc-100/80 text-pretty order-1 md:order-1 text-lg"
+      >
+        <p>
+          Soy Kevin Andrey Durán Martínez, estudiante de Ingeniería en Sistemas
+          de Información y desarrollador de software <strong
+            >con pasión por la tecnología, la innovación y el aprendizaje
+            continuo.</strong
+          >
+        </p>
+        <p>
+          Me especializo en crear soluciones modernas, escalables y centradas en
+          resolver problemas reales, aplicando buenas prácticas y priorizando la
+          calidad. <strong>He participado en proyectos como MYPIMES</strong>,
+          una plataforma para la encuestación y diagnóstico digital de pequeñas
+          y medianas empresas en Costa Rica, desarrollada en colaboración con
+          CEMEDE.
+        </p>
+        <p>
+          Me defino como una persona <strong
+            >responsable, proactiva y comprometida</strong
+          >, en constante búsqueda de nuevos desafíos que impulsen mi
+          crecimiento y el de quienes usan la tecnología que construyo.
+        </p>
+      </div>
+
+      <div class="order-2 md:order-2 h-full">
+        <LottiePlayer
+          class="mi-clase-personalizada"
+          width="300px"
+          height="300px"
+          autoplay={true}
+          loop={true}
+          speed={1}
+        />
+      </div>
     </div>
-  </div>
+  </AnimationDiv>
 
   <div class="mt-10">
     <h3 class="text-2xl font-bold text-fuchsia-400 mb-4 text-center">

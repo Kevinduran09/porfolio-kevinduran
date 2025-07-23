@@ -4,18 +4,20 @@ import BentoCard from "@/components/BentoCard.astro";
 import { getProjects } from "@/data/projects";
 import ProjectsIcon from "@/components/icons/ProjectsIcon.astro";
 import SectionLayout from "@/layouts/SectionLayout.astro";
+import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 
 const projects = getProjects();
 ---
 
 <SectionLayout id="projects">
-  <h2
-    id="projects-title"
-    class="opacity-0 w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
-  >
-    <ProjectsIcon />
-    Proyectos
-  </h2>
+  <AnimationDiv direction="right" delay={0} duration={2} thershold={3.0}>
+    <h2
+      class="w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
+    >
+      <ProjectsIcon />
+      Proyectos
+    </h2>
+  </AnimationDiv>
 
   <div
     class="flex flex-col gap-2 sm:grid sm:grid-cols-2 md:grid-cols-4 sm:grid-rows-3 sm:auto-rows-[160px] md:auto-rows-[200px]"
@@ -83,16 +85,6 @@ const projects = getProjects();
       stagger,
     } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
     function startProjectAnimations() {
-      // 1. Animar título
-      animate(
-        "#projects-title",
-        { opacity: [0, 1], transform: ["translateX(50px)", "translateX(0)"] },
-        {
-          duration: 0.8,
-          easing: "ease-out",
-        }
-      );
-
       // 2. Animar bienvenida después
       setTimeout(() => {
         animate(
