@@ -6,14 +6,13 @@ import LinkedIn from "@/components/icons/LinkedIn.astro";
 import Mail from "@/components/icons/Gmail.astro";
 import { Image } from "astro:assets";
 import SectionLayout from "@/layouts/SectionLayout.astro";
-import Slogan from "@/components/Slogan.astro";
 import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 
 const Personal_Information = {
   name: "Kevin Durán",
   linkedin:
     "https://www.linkedin.com/in/kevin-dur%C3%A1n-mart%C3%ADnez-1b6868151/",
-  email: "kevin.duran@email.com",
+  email: "kduran.091001@gmail.com",
   titles: [
     "Ingeniero de Software",
     "Desarrollador Full Stack",
@@ -54,8 +53,7 @@ const Personal_Information = {
           >
             {Personal_Information.name}
           </h1>
-          <!-- <Slogan /> -->
-
+        
           <div class="tex-center w-full md:mx-0">
             <div
               class="mb-4 mt-2 lg:mt-0 text-2xl md:text-3xl lg:text-4xl text-fuchsia-600 font-semibold overflow-hidden"
@@ -101,30 +99,5 @@ const Personal_Information = {
     </div>
   </div>
 
-  <!-- <script type="module">
-    import {
-      animate,
-      stagger,
-    } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
-    const transformAnimation =
-      window.innerWidth < 768
-        ? ["translateX(200px)", " translateX(0)"]
-        : ["translateX(-200px)", " translateX(0)"];
-    animate(
-      "#hero-image",
-      { opacity: [0, 1] },
-      { duration: 3, easing: "ease-out", delay: 1 }
-    );
 
-    setTimeout(() => {
-      animate(
-        "#hero-text-content",
-        {
-          opacity: [0, 1],
-          transform: transformAnimation,
-        },
-        { duration: 1.8 }
-      );
-    }, 1500);
-  </script> -->
 </SectionLayout>

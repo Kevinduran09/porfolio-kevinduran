@@ -44,6 +44,9 @@ const observer = new IntersectionObserver(
           default: "translate(0)",
         }[direction];
 
+        // Ensure CSS fallback transitions are enabled
+        el.classList.add('animate-ready');
+
         animate(
           el,
           {
@@ -73,6 +76,8 @@ function initializeAnimations() {
     if (!animatedElements.has(id)) {
       // Asegurarse de que el elemento esté oculto antes de observarlo
       el.style.opacity = '0';
+      // Allow CSS fallback transitions to run when we later reveal
+      el.classList.remove('animate-ready');
       observer.observe(el);
     } else {
       // Si ya fue animado anteriormente, mostrarlo sin animación

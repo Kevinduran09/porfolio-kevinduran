@@ -42,3 +42,10 @@ body {
 .animate-ready {
   transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
 }
+
+/* When JS is present, hide animation targets immediately to avoid flash. The
+   animations.js script will reveal elements when appropriate. */
+.js .animate-on-visible {
+  opacity: 0;
+  transform: translateZ(0) scale(1);
+}
