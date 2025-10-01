@@ -14,7 +14,7 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
     direction="right"
     delay={1.5}
     duration={2}
-    thershold={9}
+    threshold={9}
   >
     <h2
       class="text-center text-4xl font-bold flex justify-center items-center gap-3 mb-8 text-white"
@@ -32,7 +32,7 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
       delay={1.5}
       direction="bottom"
       duration={2}
-      thershold={3}
+      threshold={3}
     >
       <div
         class="[&>p]:mb-4 [&>p>strong]:bg-fuchsia-600 [&>p>strong]:py-0.5 [&>p>strong]:px-1 [&>p>strong]:text-zinc-100/80 text-pretty order-1 md:order-1 text-lg"
@@ -87,10 +87,10 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
     <div class="order-2 md:order-2 h-full">
       <AnimationDiv
         id="lot-ani"
-        delay={1}
+        delay={2}
         direction="bottom"
         duration={2}
-        thershold={0.3}
+        threshold={0.3}
       >
         <LottiePlayer
           class="mi-clase-personalizada"
@@ -104,9 +104,17 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
     </div>
   </div>
   <div class="mt-10">
-    <h3 class="text-2xl font-bold text-fuchsia-400 mb-4 text-center">
+    <AnimationDiv
+      id="carrl-content"
+      delay={1.5}
+      direction="bottom"
+      duration={2}
+      threshold={3}
+      class="text-2xl font-bold text-fuchsia-400 mb-4 text-center"
+    >
       Tecnologías
-    </h3>
-    <TechCarousel />
+      <TechCarousel />
+    </AnimationDiv>
+    
   </div>
 </SectionLayout>

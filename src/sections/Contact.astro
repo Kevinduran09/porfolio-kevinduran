@@ -12,7 +12,7 @@ const emailAdress = "kduran.091001@gmail.com";
     direction="bottom"
     delay={1}
     duration={2.5}
-    thershold={20}
+    threshold={20}
   >
     <div class="md:px-34 py-28">
       <div class="w-full text-center my-10">
@@ -64,7 +64,6 @@ const emailAdress = "kduran.091001@gmail.com";
   <script define:vars={{ emailAdress }}>
     const button = document.querySelector("#copy-button");
     const tooltip = document.querySelector("#tooltip");
-
     if (button && tooltip) {
       button.addEventListener("click", async () => {
         try {

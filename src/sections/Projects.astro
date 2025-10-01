@@ -14,7 +14,7 @@ const projects = getProjects();
     direction="right"
     delay={0}
     duration={2}
-    thershold={32}
+    threshold={32}
     id="proj-title"
   >
     <h2
@@ -32,8 +32,8 @@ const projects = getProjects();
       id="proj-box"
       delay={1}
       duration={1.5}
-      thershold={0.3}
-      class="opacity-0 sm:col-span-2 sm:row-span-2 flex flex-col justify-center items-center bg-gradient-to-br from-fuchsia-700/80 to-fuchsia-400/80 rounded-xl shadow-xl p-4 sm:p-8 text-white"
+      threshold={0.3}
+      class="sm:col-span-2 sm:row-span-2 flex flex-col justify-center items-center bg-gradient-to-br from-fuchsia-700/80 to-fuchsia-400/80 rounded-xl shadow-xl p-4 sm:p-8 text-white"
     >
       <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-center">
         ¡Bienvenido!
@@ -46,7 +46,7 @@ const projects = getProjects();
     {
       projects.slice(0, 5).map((project, idx) => (
         <div
-          class={`bento opacity-0 ${
+          class={`bento ${
             idx === 0
               ? "col-span-1 sm:col-span-2 row-span-1"
               : idx === 3 || idx === 4
@@ -54,6 +54,7 @@ const projects = getProjects();
                 : "col-span-1 row-span-1"
           }`}
           data-index={idx}
+          data-anim-id={`bento-${project.id}`}
         >
           <BentoCard
             project={{
@@ -90,8 +91,9 @@ const projects = getProjects();
     <script type="module">
       import {
         animate,
-        stagger,
       } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
+      import { animatedElements } from "/scripts/animationState.js";
+
       function startProjectAnimations() {
         // 3. Activar observer para las bento (por visibilidad individual)
         setTimeout(() => {
@@ -106,18 +108,29 @@ const projects = getProjects();
           (entries, obs) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                animate(
-                  entry.target,
-                  { scale: [0.75, 1.05, 0.94, 1], opacity: [0, 1] },
-                  {
-                    delay: stagger(0.5, {
-                      startDelay: entry.target.dataset.index * 0.3,
-                    }),
-                    duration: 1.2,
-                    easing: "ease-in-out",
-                  }
-                );
-                obs.unobserve(entry.target); // Solo una vez
+                const el = entry.target;
+                const id = el.dataset.animId;
+
+                if (!animatedElements.has(id)) {
+                  const indexDelay = parseFloat(el.dataset.index || "0") * 0.3;
+                  animate(
+                    el,
+                    { scale: [0.75, 1.05, 0.94, 1], opacity: [0, 1] },
+                    {
+                      delay: indexDelay,
+                      duration: 1.2,
+                      easing: "ease-in-out",
+                    }
+                  );
+                  animatedElements.add(id);
+                } else {
+                  // Si ya fue animado, mostrar inmediatamente sin animación
+                  el.style.opacity = '1';
+                  el.style.transform = 'none';
+                  el.classList.add('animated');
+                }
+
+                obs.unobserve(el); // Solo una vez
               }
             });
           },

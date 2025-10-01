@@ -14,7 +14,7 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
     direction="right"
     delay={0}
     duration={2}
-    thershold={3.0}
+    threshold={3.0}
   >
     <h2
       class="w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
@@ -24,25 +24,28 @@ import AnimationDiv from "@/components/animations/AnimationDiv.astro";
     </h2>
   </AnimationDiv>
 
-  <div class="mt-12">
-    {
-      experience
-        .sort((a, b) => a.order - b.order)
-        .map((exp, idx) => (
-          <AnimationDiv
-            id={`exp-li-${idx}`}
-            delay={0.5}
-            direction={idx % 2 ? "left" : "right"}
-            duration={0.8}
-            thershold={36}
-          >
-            <ExperienceItem
-              {...exp}
-              icon={GraduationCap}
-              isLast={idx === experience.length - 1}
-            />
-          </AnimationDiv>
-        ))
-    }
+  <div class="space-y-6">
+    {experience.map((exp, idx) => (
+      <AnimationDiv
+        id={`exp-item-${idx}`}
+        delay={0.3 + idx * 0.3}
+        duration={0.8}
+        threshold={36}
+      >
+        <AnimationDiv
+          id={`exp-li-${idx}`}
+          delay={0.5}
+          direction={idx % 2 ? "left" : "right"}
+          duration={0.8}
+          threshold={36}
+        >
+          <ExperienceItem
+            {...exp}
+            icon={GraduationCap}
+            isLast={idx === experience.length - 1}
+          />
+        </AnimationDiv>
+      </AnimationDiv>
+    ))}
   </div>
 </SectionLayout>

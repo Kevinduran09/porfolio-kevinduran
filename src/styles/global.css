@@ -30,3 +30,15 @@ body {
   }
 
 }
+
+/* JavaScript-controlled initial state to avoid flash */
+.js-hidden {
+  opacity: 0 !important;
+  transform: scale(0.75) !important;
+  transition: none !important;
+}
+
+/* Applied when animations are allowed and element should animate with CSS transitions as fallback */
+.animate-ready {
+  transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
+}

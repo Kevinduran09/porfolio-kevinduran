@@ -5,6 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 import Footer from "@/components/Footer.astro";
 import TechnicalSections from "@/sections/TechnicalSections.astro";
 
+
 // Generar rutas estáticas para todos los proyectos
 export async function getStaticPaths() {
   const projects = getProjects();
@@ -33,6 +34,7 @@ const mainImage = project.images?.[0] || "/coming-soon.webp";
   <div class="min-h-screen bg-background">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
       <!-- Header del Proyecto -->
+
       <header class="mb-8">
         <h1
           transition:name={`title-${project.title}`}
@@ -49,26 +51,26 @@ const mainImage = project.images?.[0] || "/coming-soon.webp";
       </header>
 
       <!-- Imagen Principal -->
-      <section class="mb-8 bg-neutral-900 rounded-xl shadow-lg overflow-hidden">
-        <div class="aspect-video relative overflow-hidden rounded-lg">
-          <img
-            transition:name={`image-${project.title}`}
-            src={mainImage}
-            alt={`Imagen descriptiva del proyecto ${project.title}`}
-            class="object-fill w-full h-full"
-            loading="lazy"
-          />
-        </div>
-      </section>
+
+      <div class="aspect-video relative overflow-hidden rounded-lg">
+        <img
+          transition:name={`image-${project.title}`}
+          src={mainImage}
+          alt={`Imagen descriptiva del proyecto ${project.title}`}
+          class="object-fill w-full h-full"
+          loading="lazy"
+        />
+      </div>
 
       <!-- Tecnologías Utilizadas -->
-      <section class="mb-8">
+
+      <section>
         <div class="text-center">
           <h2 class="text-2xl font-bold mb-2">Tecnologías Utilizadas</h2>
           <p class="text-neutral-400 mb-4">
             Stack tecnológico empleado en el desarrollo del proyecto
           </p>
-          <div class="flex flex-wrap justify-center gap-5 p-4">
+          <div class="flex flex-wrap justify-center gap-5 p-4 tech-container">
             {
               project.technologies.map((tech) => (
                 <img
@@ -88,24 +90,4 @@ const mainImage = project.images?.[0] || "/coming-soon.webp";
     </div>
   </div>
   <Footer />
-
-  <script type="module">
-    import {
-      animate,
-      stagger,
-    } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
-
-    // Aplicar animación infinita tipo "bombeo" a los íconos de tecnología
-    animate(
-      ".tech-li",
-      { y: [0, -20, 0] }, // subir 30px y volver a inicio
-      {
-        delay: stagger(0.4, { startDelay: 0.3 }), // 0.4s de retraso por elemento
-        duration: 0.8, // tiempo de subida/bajada
-        ease: "easeInOut", // suavidad natural
-        repeat: Infinity,
-        repeatDelay: 2, // sin pausa general
-      }
-    );
-  </script>
 </Layout>
