@@ -4,7 +4,7 @@ import { getProjects, getProjectById } from "@/data/projects";
 import Layout from "@/layouts/Layout.astro";
 import Footer from "@/components/Footer.astro";
 import TechnicalSections from "@/sections/TechnicalSections.astro";
-
+import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 
 // Generar rutas estáticas para todos los proyectos
 export async function getStaticPaths() {
@@ -34,60 +34,82 @@ const mainImage = project.images?.[0] || "/coming-soon.webp";
   <div class="min-h-screen bg-background">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
       <!-- Header del Proyecto -->
-
-      <header class="mb-8">
-        <h1
-          transition:name={`title-${project.title}`}
-          class="text-4xl font-title font-black leading-none md:text-6xl lg:text-5xl 2xl:text-7xl mb-8"
-        >
-          {project.title}
-        </h1>
-        <p class="text-2xl mb-3">
-          ¿Qué es {project.title}?
-        </p>
-        <p class="text-lg text-neutral-300 leading-relaxed">
-          {project.description}
-        </p>
-      </header>
+     
+        <header class="mb-8">
+          <h1
+            transition:name={`title-${project.title}`}
+            class="text-4xl font-title font-black leading-none md:text-6xl lg:text-5xl 2xl:text-7xl mb-8"
+          >
+            {project.title}
+          </h1>
+          <p class="text-2xl mb-3">
+            ¿Qué es {project.title}?
+          </p>
+          <p class="text-lg text-neutral-300 leading-relaxed">
+            {project.description}
+          </p>
+        </header>
+   
 
       <!-- Imagen Principal -->
-
-      <div class="aspect-video relative overflow-hidden rounded-lg">
-        <img
-          transition:name={`image-${project.title}`}
-          src={mainImage}
-          alt={`Imagen descriptiva del proyecto ${project.title}`}
-          class="object-fill w-full h-full"
-          loading="lazy"
-        />
-      </div>
+      <AnimationDiv direction="right" delay={0.3} duration={1.2} id="project-image" class="mb-8 overflow-hidden">
+        <div class="aspect-video relative overflow-hidden rounded-lg">
+          <img
+            transition:name={`image-${project.title}`}
+            src={mainImage}
+            alt={`Imagen descriptiva del proyecto ${project.title}`}
+            class="object-fill w-full h-full"
+            loading="lazy"
+          />
+        </div>
+      </AnimationDiv>
 
       <!-- Tecnologías Utilizadas -->
-
-      <section>
-        <div class="text-center">
-          <h2 class="text-2xl font-bold mb-2">Tecnologías Utilizadas</h2>
-          <p class="text-neutral-400 mb-4">
-            Stack tecnológico empleado en el desarrollo del proyecto
-          </p>
-          <div class="flex flex-wrap justify-center gap-5 p-4 tech-container">
-            {
-              project.technologies.map((tech) => (
-                <img
-                  class="size-12 tech-li"
-                  src={tech.icon}
-                  alt={tech.alt}
-                  loading="lazy"
-                />
-              ))
-            }
+      <AnimationDiv direction="bottom" delay={0.6} duration={1} id="project-tech" class="mb-8">
+        <section>
+          <div class="text-center">
+            <h2 class="text-2xl font-bold mb-2">Tecnologías Utilizadas</h2>
+            <p class="text-neutral-400 mb-4">
+              Stack tecnológico empleado en el desarrollo del proyecto
+            </p>
+            <div class="flex flex-wrap justify-center gap-5 p-4 tech-container">
+              {
+                project.technologies.map((tech) => (
+                  <img
+                    class="size-12 tech-li"
+                    src={tech.icon}
+                    alt={tech.alt}
+                    loading="lazy"
+                  />
+                ))
+              }
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimationDiv>
 
       <!-- Secciones Técnicas -->
       <TechnicalSections sections={project.sections || []} />
     </div>
   </div>
   <Footer />
+ <script  type="module">
+    import {
+      animate,
+      stagger,
+    } from "https://cdn.jsdelivr.net/npm/motion@12.23.0/+esm";
+
+
+    animate(
+      ".tech-li",
+      { y: [0, -20, 0] }, 
+      {
+        delay: stagger(0.4, { startDelay: 0.3 }), 
+        duration: 0.8, 
+        ease: "easeInOut", 
+        repeat: Infinity,
+        repeatDelay: 2, 
+      }
+    );
+  </script>
 </Layout>
