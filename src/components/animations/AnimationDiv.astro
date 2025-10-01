@@ -5,7 +5,7 @@ interface Props {
   duration?: number;
   class?: string;
   id: string;
-  thershold?: number;
+  threshold?: number;
 }
 
 const {
@@ -14,20 +14,19 @@ const {
   duration = 0.8,
   class: className = "",
   id,
-  thershold = 0.2,
+  threshold = 0.2,
 } = Astro.props;
 ---
 
 <div
-  client:load
   transition:persist
   transition:name={`anim-${id}`}
-  class={`animate-on-visible opacity-0 ${className}`}
+  class={`animate-on-visible ${className}`}
   data-direction={direction}
   data-delay={delay}
   data-duration={duration}
   data-anim-id={id}
-  data-threshold={thershold}
+  data-threshold={threshold}
 >
   <slot />
 </div>

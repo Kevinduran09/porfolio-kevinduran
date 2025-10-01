@@ -1,1 +1,2 @@
-export const animatedElements = new WeakSet();
+
+export const animatedElements = new Set();
