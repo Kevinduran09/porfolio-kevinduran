@@ -2,78 +2,53 @@
 import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 import SectionLayout from "@/layouts/SectionLayout.astro";
 
-// Componente Contact básico
+// Redesigned contact CTA
 const emailAdress = "kduran.091001@gmail.com";
 ---
 
-<SectionLayout id="contact" class="">
-  <AnimationDiv
-    id="cont-content"
-    direction="bottom"
-    delay={1}
-    duration={2.5}
-    threshold={20}
-  >
-    <div class="md:px-34 py-28">
-      <div class="w-full text-center my-10">
-        <span class="text-4xl font-bold">
-          Si quieres saber mas de mi puedes contactarme!
-        </span>
-      </div>
-      <div class="flex flex-row gap-3 relative">
-        <div class="bg-gray-300 border-2 border-gray-500 rounded-lg p-2 w-full">
-          <span class="text-gray-950 font-medium">{emailAdress}</span>
-        </div>
-        <div class="relative">
-          <button
-            class="flex items-center gap-2 p-2 bg-fuchsia-600 rounded-lg cursor-pointer transition-all duration-300 ease-in-out hover:-translate-y-1 relative"
-            id="copy-button"
-            data-tooltip="¡Copiado!"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="icon icon-tabler icon-tabler-copy"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path
-                d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z"
-              ></path>
-              <path
-                d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"
-              ></path>
-            </svg>
-            Copiar
-          </button>
-          <div
-            id="tooltip"
-            class="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded-md opacity-0 transition-opacity duration-300 pointer-events-none"
-          >
-            ¡Copiado!
+<SectionLayout id="contact" class="py-16">
+  <AnimationDiv id="cont-cta" direction="bottom" delay={0.6} duration={1.2} threshold={0.2}>
+    <div class="flex justify-center text-center px-4">
+      <div class="w-full max-w-3xl bg-black/30 backdrop-blur-md rounded-xl shadow-lg p-6 flex flex-col sm:flex-row items-center sm:items-stretch gap-6">
+        <div class="flex-1 text-center sm:text-left">
+          <h3 class="text-2xl sm:text-3xl font-semibold mb-1">Hablemos sobre tu proyecto</h3>
+          <p class="text-neutral-300 text-sm sm:text-base mb-4">Si tienes una idea o un reto y te interesa colaborar, cuéntame y te enviaré una propuesta clara con los siguientes pasos.</p>
+
+          <div class="flex w-full items-center gap-3 justify-center sm:justify-center">
+            <div class="bg-neutral-900/60 border border-neutral-700 rounded px-3 py-2 text-xs text-neutral-200 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-fuchsia-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m0 0l4-4m-4 4l4 4"/></svg>
+              <div class="leading-tight">
+                <div class="text-[10px] text-neutral-400">Email</div>
+                <div class="text-sm font-medium">{emailAdress}</div>
+              </div>
+            </div>
+
+            <button id="copy-button" class="bg-fuchsia-600 hover:bg-fuchsia-500 text-white px-3 py-1.5 rounded shadow-sm transition transform hover:-translate-y-0.5 text-sm">Copiar email</button>
           </div>
         </div>
+
+       
       </div>
     </div>
   </AnimationDiv>
+
+  <div class="max-w-4xl mx-auto mt-4 text-center">
+    <small class="text-neutral-500">Si prefieres un contacto directo por mensajería, usa el enlace de LinkedIn o mi GitHub para ver ejemplos de trabajo.</small>
+  </div>
+
+  <div id="tooltip" class="hidden"></div>
+
   <script define:vars={{ emailAdress }}>
-    const button = document.querySelector("#copy-button");
-    const tooltip = document.querySelector("#tooltip");
-    if (button && tooltip) {
-      button.addEventListener("click", async () => {
+    const button = document.querySelector('#copy-button');
+    if (button) {
+      button.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(emailAdress);
-          tooltip.style.opacity = "1";
-          setTimeout(() => {
-            tooltip.style.opacity = "0";
-          }, 2000);
+          const original = button.textContent;
+          button.textContent = '¡Copiado!';
+          setTimeout(() => button.textContent = original, 1800);
         } catch (err) {
-          console.error("Error al copiar:", err);
+          console.error('Error al copiar:', err);
         }
       });
     }
