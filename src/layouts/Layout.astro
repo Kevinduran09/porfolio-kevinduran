@@ -1,5 +1,4 @@
 ---
-import Header from "@/components/Header.astro";
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 const { title, description } = Astro.props;
@@ -13,7 +12,7 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href="https://kevinduran.vercel.app/" />
-    <meta name="keywords" content="Nike">
+    <meta name="keywords" content="Nike" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta
@@ -57,3 +56,8 @@ const { title, description } = Astro.props;
 </html>
 
 <script type="module" src="/scripts/animations.js"></script>
+<script>
+  import AOS from "aos";
+  import "aos/dist/aos.css";
+  AOS.init();
+</script>

@@ -4,48 +4,42 @@ import { experience } from "@/data/experience";
 import ExperienceItem from "@/components/ExperienceItem.astro";
 import ExperienceIcon from "@/components/icons/ExperienceIcon.astro";
 import SectionLayout from "@/layouts/SectionLayout.astro";
-import AnimatedText from "@/components/animations/AnimatedText.astro";
-import AnimationDiv from "@/components/animations/AnimationDiv.astro";
 ---
 
 <SectionLayout id="experience" class="mt-8">
-  <AnimationDiv
+  <!-- TÍTULO -->
+  <h2
     id="exp-title"
-    direction="right"
-    delay={0}
-    duration={2}
-    threshold={3.0}
+    class="w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
+    data-aos="fade-left"
+    data-aos-delay="150"
+    data-aos-duration="900"
+    data-aos-once="true"
   >
-    <h2
-      class="w-full justify-center flex items-center gap-x-3 text-4xl font-semibold text-center my-6 md:my-12 text-white"
-    >
-      <ExperienceIcon />
-      Experiencia
-    </h2>
-  </AnimationDiv>
+    <ExperienceIcon />
+    Experiencia
+  </h2>
 
+  <!-- LISTA -->
   <div class="space-y-6">
-    {experience.map((exp, idx) => (
-      <AnimationDiv
-        id={`exp-item-${idx}`}
-        delay={0.3 + idx * 0.3}
-        duration={0.8}
-        threshold={36}
-      >
-        <AnimationDiv
-          id={`exp-li-${idx}`}
-          delay={0.5}
-          direction={idx % 2 ? "left" : "right"}
-          duration={0.8}
-          threshold={36}
+    {
+      experience.map((exp, idx) => (
+        <div
+          id={`exp-item-${idx}`}
+          data-aos={idx % 2 ? "fade-left" : "fade-right"}
+          data-aos-delay={300 + idx * 180}
+          data-aos-duration="900"
+          data-aos-once="true"
+          class="will-change-transform"
+          style={`--aos-delay: ${300 + idx * 180}ms`}
         >
           <ExperienceItem
             {...exp}
             icon={GraduationCap}
             isLast={idx === experience.length - 1}
           />
-        </AnimationDiv>
-      </AnimationDiv>
-    ))}
+        </div>
+      ))
+    }
   </div>
 </SectionLayout>
