@@ -15,6 +15,18 @@ body {
   overflow-x: hidden;
 }
 
+[data-aos="scale-up"] {
+  transform: scale(0);
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-duration: 1.5s;
+  transition-timing-function: ease-out;
+}
+
+[data-aos="scale-up"].aos-animate {
+  transform: scale(1);
+  opacity: 1;
+}
 
 @theme {
   --animate-loop-scroll: loop-scroll 30s linear infinite;
