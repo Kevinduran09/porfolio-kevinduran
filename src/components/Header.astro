@@ -2,22 +2,28 @@
 import ExperienceIcon from "@/components/icons/ExperienceIcon.astro";
 import PersonIcon from "@/components/icons/PersonIcon.astro";
 import ProjectsIcon from "@/components/icons/ProjectsIcon.astro";
+import { sectionsConfig } from "@/data/config";
 
 const navItems = [
-  {
+  sectionsConfig.projects.enabled && {
     name: "Proyectos",
     label: "projects",
     url: "#projects",
     icon: ProjectsIcon,
   },
-  { name: "Sobre mí", label: "aboutme", url: "#aboutme", icon: PersonIcon },
-  {
+  sectionsConfig.aboutMe.enabled && {
+    name: "Sobre mí",
+    label: "aboutme",
+    url: "#aboutme",
+    icon: PersonIcon,
+  },
+  sectionsConfig.experience.enabled && {
     name: "Experiencia",
     label: "experience",
     url: "#experience",
     icon: ExperienceIcon,
   },
-];
+].filter(Boolean);
 ---
 
 <header id="site-header" class="header top-0 md:bottom-8 md:top-auto">

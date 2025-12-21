@@ -160,7 +160,6 @@ export const technologies: Technology[] = [
   },
 ];
 
-// Función helper para duplicar tecnologías (útil para carruseles)
 export const getDuplicatedTechnologies = () => [
   ...technologies,
   ...technologies,
