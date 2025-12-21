@@ -160,14 +160,6 @@ export const technologies: Technology[] = [
   },
 ];
 
-// Función helper para obtener tecnologías por categoría
-export const getTechnologiesByCategory = (category: Technology["category"]) => {
-  return technologies.filter((tech) => tech.category === category);
-};
-
-// Función helper para obtener todas las tecnologías
-export const getAllTechnologies = () => technologies;
-
 // Función helper para duplicar tecnologías (útil para carruseles)
 export const getDuplicatedTechnologies = () => [
   ...technologies,
