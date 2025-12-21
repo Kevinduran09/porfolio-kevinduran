@@ -13,28 +13,23 @@ export interface SectionIcon {
 export const sectionIcons: Record<SectionSlug, SectionIcon> = {
   frontend: {
     component: FrontendIcon,
-    label: "Frontend"
+    label: "Frontend",
   },
   backend: {
     component: BackendIcon,
-    label: "Backend"
+    label: "Backend",
   },
   database: {
     component: DatabaseIcon,
-    label: "Base de Datos"
+    label: "Base de Datos",
   },
   deployment: {
     component: DeploymentIcon,
-    label: "Despliegue"
-  }
+    label: "Despliegue",
+  },
 };
 
 // Función helper para obtener un icono de sección
 export const getSectionIcon = (slug: SectionSlug): SectionIcon | undefined => {
   return sectionIcons[slug];
 };
-
-// Función helper para obtener todos los slugs disponibles
-export const getAvailableSectionSlugs = (): SectionSlug[] => {
-  return Object.keys(sectionIcons) as SectionSlug[];
-}; 
