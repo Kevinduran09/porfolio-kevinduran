@@ -1,12 +1,8 @@
 /**
- * Configuración centralizada del portafolio
- * Aquí puedes editar fácilmente toda la información del sitio
+ * Archivo de configuración centralizada del portafolio
  */
 
-// ============================================================================
 // INFORMACIÓN PERSONAL
-// ============================================================================
-
 export const personalInfo = {
   name: "Kevin Durán",
   fullName: "Kevin Andrey Durán Martínez",
@@ -16,17 +12,13 @@ export const personalInfo = {
     "Apasionado por la tecnología",
   ],
   email: "kduran.091001@gmail.com",
-  phone: "+506 8123 4567", // Opcional
   location: "Costa Rica",
   linkedin: "https://www.linkedin.com/in/kevin-durán-martínez-1b6868151/",
   github: "https://github.com/Kevinduran09",
-  cv: "/Curriculum vitae Kevin Andrey Duran Martinez.pdf",
+  cv: "Kevin Duran Martinez CV.pdf",
 };
 
-// ============================================================================
 // BIOGRAFÍA (Sección Acerca de mí)
-// ============================================================================
-
 export const biography = {
   enabled: true,
   paragraphs: [
@@ -45,10 +37,7 @@ export const biography = {
   ],
 };
 
-// ============================================================================
 // HABILIDADES / SKILLS
-// ============================================================================
-
 export const skills = {
   enabled: true,
   list: [
@@ -60,10 +49,7 @@ export const skills = {
   ],
 };
 
-// ============================================================================
 // SECCIONES HABILITADAS/DESHABILITADAS
-// ============================================================================
-
 export const sectionsConfig = {
   hero: { enabled: true, label: "Hero" },
   projects: { enabled: true, label: "Proyectos" },
@@ -73,41 +59,30 @@ export const sectionsConfig = {
   technicalSkills: { enabled: true, label: "Habilidades Técnicas" },
 };
 
-// ============================================================================
 // TECNOLOGÍAS POR CATEGORÍA
-// ============================================================================
-
 export const technologiesConfig = {
   enabledCategories: ["frontend", "backend", "database", "devops", "other"],
   carouselEnabled: true,
-  carouselDuplicateForLoop: true, // Duplicar tecnologías para efecto de carrusel infinito
+  carouselDuplicateForLoop: true,
 };
 
-// ============================================================================
 // FILTROS Y LÍMITES
-// ============================================================================
-
 export const displayConfig = {
-  projectsToShow: 5, // Número de proyectos a mostrar en la grid
-  experienceItemsToShow: 100, // Mostrar todos por defecto
-  technologiesToShow: 100, // Mostrar todas por defecto
+  projectsToShow: 5,
+  experienceItemsToShow: 100,
+  technologiesToShow: 100,
 };
 
-// ============================================================================
 // ANIMACIONES
-// ============================================================================
-
 export const animationConfig = {
   enableAOS: true, // Habilitar AOS (Animate On Scroll)
   enableCustomAnimations: true,
-  defaultDuration: 900, // ms
-  defaultDelay: 200, // ms
+  defaultDuration: 900,
+  defaultDelay: 200,
   scrollThreshold: 0.3,
 };
 
-// ============================================================================
 // COLORES Y TEMA
-// ============================================================================
 
 export const themeConfig = {
   primaryColor: "fuchsia",
@@ -116,9 +91,7 @@ export const themeConfig = {
   textColor: "#fff",
 };
 
-// ============================================================================
 // SEO Y METADATOS
-// ============================================================================
 
 export const seoConfig = {
   siteTitle: "Kevin Duran | Portafolio - Desarrollador de software",

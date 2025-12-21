@@ -34,6 +34,7 @@ import { biography, personalInfo } from "@/data/config";
             data-aos-duration="1000"
             data-aos-once="true"
             set:html={para.text}
+            data-aos-offset="200"
           />
         ))
       }
@@ -44,15 +45,13 @@ import { biography, personalInfo } from "@/data/config";
         data-aos-delay="900"
         data-aos-duration="1000"
         data-aos-once="true"
+        data-aos-offset="200"
       >
         <a
           target="_blank"
           href={personalInfo.cv}
           download
           class="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-fuchsia-700 hover:bg-fuchsia-600 text-white font-semibold shadow-lg transition-colors text-lg"
-          data-aos="fade-up"
-          data-aos-delay="700"
-          data-aos-duration="900"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -79,6 +78,7 @@ import { biography, personalInfo } from "@/data/config";
       data-aos-delay="600"
       data-aos-duration="1100"
       data-aos-once="true"
+      data-aos-offset="200"
     >
       <LottiePlayer
         class="mi-clase-personalizada"
@@ -98,6 +98,7 @@ import { biography, personalInfo } from "@/data/config";
     data-aos-delay="900"
     data-aos-duration="1000"
     data-aos-once="true"
+    data-aos-offset="100"
   >
     Tecnologías
     <TechCarousel />
