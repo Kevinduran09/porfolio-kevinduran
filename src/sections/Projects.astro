@@ -4,6 +4,7 @@ import BentoCard from "@/components/BentoCard.astro";
 import { getProjects } from "@/data/projects";
 import ProjectsIcon from "@/components/icons/ProjectsIcon.astro";
 import SectionLayout from "@/layouts/SectionLayout.astro";
+import { displayConfig } from "@/data/config";
 
 const projects = getProjects();
 ---
@@ -41,7 +42,7 @@ const projects = getProjects();
 
     <!-- Proyectos con animación escalonada -->
     {
-      projects.slice(0, 5).map((project, idx) => (
+      projects.slice(0, displayConfig.projectsToShow).map((project, idx) => (
         <div
           class={`bento-card ${
             idx === 0
@@ -54,7 +55,8 @@ const projects = getProjects();
           data-aos-duration="900"
           data-aos-delay={200 + idx * 200}
           data-aos-once="true"
-          style={`--aos-delay: ${200 + idx * 200}ms`}
+          data-aos-offset="70"
+          style={`--aos-delay: ${100 + idx * 100}ms`}
         >
           <BentoCard
             project={{
