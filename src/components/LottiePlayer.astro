@@ -40,19 +40,40 @@ const {
 </div>
 
 <script>
-  // Función optimizada para cargar Lottie
-  async function loadLottieAnimation(container) {
-    try {
-      const lottie = await import("lottie-web");
+  // Estado global para limpieza
+  let currentAnimation = null;
+  let currentObserver = null;
 
+  // Función optimizada para cargar Lottie
+  async function loadLottieAnimation() {
+    try {
       const container = document.getElementById("lottie-container");
       if (!container) return;
+
+      // Limpiar animación anterior si existe
+      if (currentAnimation) {
+        currentAnimation.destroy();
+        currentAnimation = null;
+      }
+      if (currentObserver) {
+        currentObserver.disconnect();
+        currentObserver = null;
+      }
+
+      // Limpiar contenido SVG residual del container
+      container.classList.remove("lottie-loaded", "lottie-error");
+      const existingSvg = container.querySelector(
+        "svg:not(.lottie-fallback svg)"
+      );
+      if (existingSvg) existingSvg.remove();
+
+      const lottie = await import("lottie-web");
 
       const autoplay = container.dataset.autoplay === "true";
       const loop = container.dataset.loop === "true";
       const speed = parseFloat(container.dataset.speed || "1");
 
-      const animation = lottie.default.loadAnimation({
+      currentAnimation = lottie.default.loadAnimation({
         container: container,
         renderer: "svg",
         loop: loop,
@@ -64,52 +85,40 @@ const {
         },
       });
 
-      animation.setSpeed(speed);
+      currentAnimation.setSpeed(speed);
 
-      animation.addEventListener("data_ready", () => {
+      currentAnimation.addEventListener("data_ready", () => {
         container.classList.add("lottie-loaded");
       });
 
-      animation.addEventListener("data_failed", (error) => {
+      currentAnimation.addEventListener("data_failed", (error) => {
         console.error("Error cargando animación Lottie:", error);
         container.classList.add("lottie-error");
       });
 
       // Intersection Observer para optimización
-      const observer = new IntersectionObserver(
+      currentObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              animation.play();
+              currentAnimation?.play();
             } else {
-              animation.pause();
+              currentAnimation?.pause();
             }
           });
         },
         { threshold: 0.1 }
       );
 
-      observer.observe(container);
+      currentObserver.observe(container);
     } catch (error) {
       console.error("Error inicializando Lottie:", error);
     }
   }
 
-  function initLottie() {
-    const container = document.getElementById("lottie-container");
-    if (container) loadLottieAnimation(container);
-  }
-
-  // Inicialización al cargar
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initLottie);
-  } else {
-    initLottie();
-  }
-
-  // Escuchar cuando Astro cambia de página (SPA)
-  window.addEventListener("astro:after-swap", () => {
-    initLottie();
+  // astro:page-load se dispara en la carga inicial Y después de cada navegación con View Transitions
+  document.addEventListener("astro:page-load", () => {
+    loadLottieAnimation();
   });
 </script>
 
