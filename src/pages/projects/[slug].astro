@@ -3,7 +3,7 @@
 import { getProjects, getProjectById } from "@/data/projects";
 import Layout from "@/layouts/Layout.astro";
 import Footer from "@/components/Footer.astro";
-import TechnicalSections from "@/sections/TechnicalSections.astro";
+import { getSectionIcon } from "@/data/section-icons";
 
 // Generar rutas estáticas para todos los proyectos
 export async function getStaticPaths() {
@@ -27,90 +27,296 @@ const description = project.description;
 
 // Imagen principal del proyecto
 const mainImage = project.images?.[0] || "/coming-soon.webp";
+const galleryImages = project.images?.slice(1) || [];
+const sections = project.sections || [];
 ---
 
 <Layout title={title} description={description}>
-  <div class="min-h-screen bg-background">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-      <!-- Header del Proyecto -->
-      <header
-        class="mb-8"
-        data-aos="fade-down"
-        data-aos-delay="150"
-        data-aos-duration="900"
-      >
-        <h1
-          transition:name={`title-${project.title}`}
-          class="text-4xl font-title font-black leading-none md:text-6xl lg:text-5xl 2xl:text-7xl mb-8"
-        >
-          {project.title}
-        </h1>
+  <div class="project-page min-h-screen">
 
-        <p class="text-2xl mb-3">
-          ¿Qué es {project.title}?
-        </p>
-
-        <p class="text-lg text-neutral-300 leading-relaxed">
-          {project.description}
-        </p>
-      </header>
-
-      <!-- Imagen Principal -->
-      <div
-        id="project-image"
-        class="mb-8 overflow-hidden"
-        data-aos="fade-right"
-        data-aos-delay="300"
-        data-aos-duration="1100"
-        data-aos-once="true"
-      >
-        <div class="aspect-video relative overflow-hidden rounded-lg">
-          <img
-            transition:name={`image-${project.title}`}
-            src={mainImage}
-            alt={`Imagen descriptiva del proyecto ${project.title}`}
-            class="object-fill w-full h-full"
-            loading="lazy"
-          />
-        </div>
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- HERO BANNER                                 -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="project-hero relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
+      <!-- Imagen de fondo -->
+      <div class="absolute inset-0">
+        <img
+          transition:name={`image-${project.title}`}
+          src={mainImage}
+          alt={`Vista principal de ${project.title}`}
+          class="w-full h-full object-cover object-center"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950/40 to-transparent"></div>
       </div>
 
-      <!-- Tecnologías Utilizadas -->
-      <section
-        id="project-tech"
-        class="mb-8"
-        data-aos="fade-up"
-        data-aos-delay="200"
-        data-aos-duration="0000"
+      <!-- Navegación superior -->
+      <nav
+        class="relative z-10 flex items-center justify-between px-6 md:px-12 pt-6"
+        data-aos="fade-down"
+        data-aos-duration="600"
       >
-        <div class="text-center">
-          <h2 class="text-2xl font-bold mb-2">Tecnologías Utilizadas</h2>
+        <a
+          href="/#projects"
+          class="group flex items-center gap-2 text-white/70 hover:text-white transition-colors duration-300"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+          <span class="text-sm font-medium tracking-wide uppercase">Volver</span>
+        </a>
+      </nav>
 
-          <p class="text-neutral-400 mb-4">
-            Stack tecnológico empleado en el desarrollo del proyecto
+      <!-- Título sobre el hero -->
+      <div class="absolute bottom-0 left-0 right-0 px-6 md:px-12 lg:px-20 pb-10 md:pb-14 z-10">
+        <div class="max-w-5xl mx-auto">
+          <p
+            class="text-fuchsia-400 text-sm font-semibold tracking-widest uppercase mb-3"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            data-aos-duration="700"
+          >
+            Proyecto
           </p>
-
-          <div class="flex flex-wrap justify-center gap-5 p-4 tech-container">
-            {
-              project.technologies.map((tech, idx) => (
-                <img class="size-12" src={tech.icon} alt={tech.alt} />
-              ))
-            }
+          <h1
+            transition:name={`title-${project.title}`}
+            class="text-4xl md:text-5xl lg:text-6xl 2xl:text-7xl font-title font-black leading-[0.95] text-white mb-4"
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-duration="800"
+          >
+            {project.title}
+          </h1>
+          <div
+            class="flex flex-wrap gap-2 mt-4"
+            data-aos="fade-up"
+            data-aos-delay="350"
+            data-aos-duration="700"
+          >
+            {project.technologies.slice(0, 5).map((tech) => (
+              <span class="px-3 py-1 text-xs font-medium rounded-full bg-slate-800/80 text-white/80 border border-white/10">
+                {tech.name}
+              </span>
+            ))}
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- CONTENIDO PRINCIPAL                         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="relative max-w-5xl mx-auto px-6 md:px-12 lg:px-8">
+
+      <!-- Descripción del proyecto -->
+      <section
+        class="py-12 md:py-16 border-b border-white/5"
+        data-aos="fade-up"
+        data-aos-delay="100"
+        data-aos-duration="800"
+        data-aos-once="true"
+      >
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+          <div class="lg:col-span-8">
+            <h2 class="text-sm font-semibold tracking-widest uppercase text-fuchsia-400 mb-4">
+              Acerca del proyecto
+            </h2>
+            <p class="text-lg md:text-xl text-neutral-300 leading-relaxed text-pretty">
+              {project.description}
+            </p>
+          </div>
+          <aside class="lg:col-span-4">
+            <div class="lg:sticky lg:top-8 space-y-6">
+              <div>
+                <h3 class="text-xs font-semibold tracking-widest uppercase text-neutral-500 mb-2">Tipo</h3>
+                <p class="text-white font-medium">Desarrollo de Software</p>
+              </div>
+              <div>
+                <h3 class="text-xs font-semibold tracking-widest uppercase text-neutral-500 mb-2">Tecnologías</h3>
+                <p class="text-white font-medium">{project.technologies.map(t => t.name).join(", ")}</p>
+              </div>
+              <div>
+                <h3 class="text-xs font-semibold tracking-widest uppercase text-neutral-500 mb-2">Secciones</h3>
+                <p class="text-white font-medium">{sections.length} áreas técnicas</p>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
-      <!-- Secciones Técnicas -->
-      <div
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- STACK TECNOLÓGICO                           -->
+      <!-- ═══════════════════════════════════════════ -->
+      <section
+        class="py-12 md:py-16 border-b border-white/5"
         data-aos="fade-up"
-        data-aos-delay="400"
-        data-aos-duration="1000"
+        data-aos-delay="100"
+        data-aos-duration="800"
         data-aos-once="true"
       >
-        <TechnicalSections sections={project.sections || []} />
-      </div>
+        <h2 class="text-sm font-semibold tracking-widest uppercase text-fuchsia-400 mb-8">
+          Stack Tecnológico
+        </h2>
+        <div class="tech-grid grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {project.technologies.map((tech, idx) => (
+            <div
+              class="tech-card group relative flex flex-col items-center gap-3 p-5 rounded-2xl
+                     bg-white/[0.03] border border-white/[0.06]
+                     hover:bg-fuchsia-500/10 hover:border-fuchsia-500/20
+                     transition-[background-color,border-color] duration-300 cursor-default"
+              style={`--stagger: ${idx}`}
+            >
+              <img
+                src={tech.icon}
+                alt={tech.alt}
+                class="w-10 h-10 object-contain grayscale group-hover:grayscale-0 transition-[filter,transform] duration-300 group-hover:scale-110"
+              />
+              <span class="text-xs font-medium text-neutral-400 group-hover:text-white transition-colors duration-300 text-center">
+                {tech.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- GALERÍA DE IMÁGENES (si hay más de 1)       -->
+      <!-- ═══════════════════════════════════════════ -->
+      {galleryImages.length > 0 && (
+        <section
+          class="py-12 md:py-16 border-b border-white/5"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-duration="800"
+          data-aos-once="true"
+        >
+          <h2 class="text-sm font-semibold tracking-widest uppercase text-fuchsia-400 mb-8">
+            Galería
+          </h2>
+          <div class={`grid gap-4 ${galleryImages.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+            {galleryImages.map((img, idx) => (
+              <div
+                class="group relative aspect-video overflow-hidden rounded-xl border border-white/[0.06]"
+                data-aos="fade-up"
+                data-aos-delay={150 + idx * 120}
+                data-aos-duration="700"
+                data-aos-once="true"
+              >
+                <img
+                  src={img}
+                  alt={`${project.title} - Captura ${idx + 2}`}
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- ═══════════════════════════════════════════ -->
+      <!-- ARQUITECTURA TÉCNICA                        -->
+      <!-- ═══════════════════════════════════════════ -->
+      {sections.length > 0 && (
+        <section
+          class="py-12 md:py-16"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-duration="800"
+          data-aos-once="true"
+        >
+          <h2 class="text-sm font-semibold tracking-widest uppercase text-fuchsia-400 mb-10">
+            Arquitectura Técnica
+          </h2>
+
+          <div class="relative">
+            <!-- Línea vertical del timeline -->
+            <div class="absolute left-[19px] md:left-[23px] top-0 bottom-0 w-px bg-gradient-to-b from-fuchsia-500/40 via-fuchsia-500/20 to-transparent hidden sm:block"></div>
+
+            <div class="space-y-8">
+              {sections.map((section, index) => {
+                const sectionIcon = getSectionIcon(section.slug);
+                const IconComponent = sectionIcon?.component;
+                return (
+                  <div
+                    class="relative flex gap-6 group"
+                    data-aos="fade-left"
+                    data-aos-delay={150 + index * 150}
+                    data-aos-duration="700"
+                    data-aos-once="true"
+                  >
+                    <!-- Indicador numerado -->
+                    <div class="hidden sm:flex flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full
+                                bg-fuchsia-500/10 border border-fuchsia-500/30
+                                items-center justify-center z-10
+                                group-hover:bg-fuchsia-500/20 group-hover:border-fuchsia-500/50
+                                transition-[background-color,border-color] duration-300">
+                      <span class="text-fuchsia-400 text-sm font-bold">{String(index + 1).padStart(2, '0')}</span>
+                    </div>
+
+                    <!-- Contenido de la sección -->
+                    <article
+                      class="flex-1 p-6 md:p-8 rounded-2xl
+                             bg-white/[0.02] border border-white/[0.06]
+                             hover:bg-white/[0.04] hover:border-fuchsia-500/15
+                             transition-[background-color,border-color] duration-300"
+                    >
+                      <header class="flex items-center gap-3 mb-4">
+                        {IconComponent && <IconComponent className="h-5 w-5 text-fuchsia-400" />}
+                        <h3 class="text-xl md:text-2xl font-bold text-white">{section.title}</h3>
+                      </header>
+                      <p class="text-neutral-400 text-base md:text-lg leading-relaxed text-pretty">
+                        {section.description}
+                      </p>
+                      {section.image && (
+                        <img
+                          src={section.image}
+                          alt={`Imagen de ${section.title}`}
+                          class="w-full h-auto rounded-xl border border-white/[0.06] mt-6"
+                          loading="lazy"
+                        />
+                      )}
+                    </article>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
     </div>
   </div>
 
   <Footer />
 </Layout>
+
+<style>
+  .project-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to top, rgb(2 6 23 / 1), transparent);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .tech-grid .tech-card {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+    animation: tech-appear 0.4s ease-out forwards;
+    animation-delay: calc(var(--stagger, 0) * 70ms);
+  }
+
+  @keyframes tech-appear {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+</style>
