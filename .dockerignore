@@ -1,0 +1,13 @@
+node_modules
+dist
+.git
+.gitignore
+.astro
+.vscode
+.idea
+.DS_Store
+*.md
+.env
+.env.*
+npm-debug.log*
+pnpm-debug.log*

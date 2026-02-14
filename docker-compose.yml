@@ -1,0 +1,11 @@
+services:
+  porfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: porfolio-kevinduran
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.5
