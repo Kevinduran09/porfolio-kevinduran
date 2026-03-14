@@ -156,7 +156,7 @@ import { personalInfo } from "@/data/config";
     </div>
   </div>
 
-  <script define:vars={{ personalInfo }}>
+  <script define:vars={{ personalInfo }} is:inline>
     const button = document.querySelector("#copy-button");
     if (button) {
       button.addEventListener("click", async () => {
