@@ -7,9 +7,14 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "build:preview": "npm run build && npm run preview"
+    "build:preview": "npm run build && npm run preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "check": "astro check",
+    "quality": "pnpm run lint && pnpm run check && pnpm run build"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.7",
     "@midudev/tailwind-animations": "^0.2.0",
     "@tailwindcss/vite": "^4.1.11",
     "aos": "^2.3.4",
@@ -20,6 +25,10 @@
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
-    "knip": "^5.71.0"
+    "@typescript-eslint/parser": "^8.57.0",
+    "eslint": "^10.0.3",
+    "eslint-plugin-astro": "^1.6.0",
+    "knip": "^5.71.0",
+    "typescript": "^5.9.3"
   }
 }

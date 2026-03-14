@@ -1,4 +1,4 @@
-import { techIcons, type TechIcon } from "@/data/technology-icons";
+import { techIcons } from "@/data/technology-icons";
 import type { SectionSlug } from "@/data/section-icons";
 
 export interface ProjectSection {
