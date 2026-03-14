@@ -1,0 +1,70 @@
+name: Update Infra | GitOps
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: update-infra-portfolio
+  cancel-in-progress: true
+jobs:
+  update_infra_pr:
+    runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.pr_meta.outputs.pr_url }}
+      deploy_tag: ${{ steps.meta.outputs.deploy_tag }}
+      branch_name: ${{ steps.meta.outputs.branch_name }}
+    env:
+      GH_TOKEN: ${{ secrets.INFRA_REPO_TOKEN }}
+      GIT_BOT_NAME: altair-bot
+      GIT_BOT_EMAIL: altair-bot@users.noreply.github.com
+    steps:
+      - name: Checkout infra repo
+        uses: actions/checkout@v4
+        with:
+          repository: Kevinduran09/Altair_ansible_config
+          token: ${{ secrets.INFRA_REPO_TOKEN }}
+          path: infra
+          fetch-depth: 0
+      - name: Resolve deploy metadata
+        id: meta
+        run: |
+          DEPLOY_TAG="sha-${GITHUB_SHA}"
+          SHORT_SHA="${GITHUB_SHA:0:12}"
+          BRANCH_NAME="deploy/portfolio-sha-${SHORT_SHA}"
+          echo "deploy_tag=$DEPLOY_TAG" >> "$GITHUB_OUTPUT"
+          echo "branch_name=$BRANCH_NAME" >> "$GITHUB_OUTPUT"
+      - name: Open/Update infra PR
+        run: |
+          cd infra
+          chmod +x scripts/update-app-tag.sh scripts/open-deploy-pr.sh
+          scripts/open-deploy-pr.sh portfolio "${GITHUB_SHA}" main group_vars/apps.yml
+      - name: Resolve PR url
+        id: pr_meta
+        run: |
+          cd infra
+          PR_URL="$(gh pr list \
+            --base main \
+            --head '${{ steps.meta.outputs.branch_name }}' \
+            --state open \
+            --json url \
+            --jq '.[0].url // ""')"
+          echo "pr_url=$PR_URL" >> "$GITHUB_OUTPUT"
+          echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
+  notify_pr_opened:
+    needs: update_infra_pr
+    uses: Kevinduran09/Altair_ansible_config/.github/workflows/discord-notify.yml@main
+    with:
+      event: deploy_pr_opened
+      project: portfolio
+      run_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      tag: ${{ needs.update_infra_pr.outputs.deploy_tag }}
+      status: warning
+      pr_url: ${{ needs.update_infra_pr.outputs.pr_url }}
+      actor: ${{ github.actor }}
+      environment: altair
+      extra: "PR de deploy creada/actualizada en altair_conf"
+    secrets:
+      discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
