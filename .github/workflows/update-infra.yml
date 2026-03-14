@@ -55,7 +55,7 @@ jobs:
           echo "PR_URL=$PR_URL" >> "$GITHUB_ENV"
   notify_pr_opened:
     needs: update_infra_pr
-    uses: Kevinduran09/Altair_ansible_config/.github/workflows/discord-notify.yml@main
+    uses: Kevinduran09/Altair_ansible_config/.github/workflows/discord-notify.yml@6e903fab57bb586c9d0184822ca4f780e34ed204
     with:
       event: deploy_pr_opened
       project: portfolio
