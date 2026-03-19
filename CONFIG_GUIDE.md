@@ -240,6 +240,7 @@ Estos archivos aún tienen sus propias estructuras pero pueden centralizarse des
 - [ ] Centralizar experiencias en config
 - [ ] Centralizar proyectos en config
 - [ ] Migrar a Astro Collections (opcional)
+- [ ] Validar workflow CI/CD con cambio mínimo de documentación
 - [ ] Admin panel para editar config sin código
 - [ ] Persistencia en base de datos
 
