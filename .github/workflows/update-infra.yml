@@ -40,7 +40,7 @@ jobs:
         run: |
           cd infra
           chmod +x scripts/update-app-tag.sh scripts/open-deploy-pr.sh
-          scripts/open-deploy-pr.sh portfolio "${GITHUB_SHA}" main group_vars/apps.yml
+          scripts/open-deploy-pr.sh portfolio "${GITHUB_SHA}" main inventory/group_vars/all/apps.yml
       - name: Resolve PR url
         id: pr_meta
         run: |
