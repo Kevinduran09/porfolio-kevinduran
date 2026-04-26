@@ -1,7 +1,25 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
-const { title, description } = Astro.props;
+import SiteBackground from "@/components/SiteBackground.astro";
+
+interface LayoutProps {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const { title, description, canonical, ogImage } = Astro.props as LayoutProps;
+
+const site = Astro.site ?? new URL("https://kevoduran.com/");
+const canonicalUrl = canonical
+  ? new URL(canonical, site).toString()
+  : new URL(Astro.url.pathname, site).toString();
+const ogUrl = canonicalUrl;
+const ogImageUrl = ogImage
+  ? new URL(ogImage, site).toString()
+  : new URL("/og.jpg", site).toString();
 ---
 
 <!DOCTYPE html>
@@ -11,8 +29,8 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href="https://kevinduran.vercel.app/" />
-    <meta name="keywords" content="Kevin DUran" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="keywords" content="Kevin Duran" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta
@@ -23,32 +41,15 @@ const { title, description } = Astro.props;
     <meta property="og:site_name" content="Kevin Duran | Portafolio" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://kevinduran.vercel.app/og.jpg" />
+    <meta property="og:url" content={ogUrl} />
+    <meta property="og:image" content={ogImageUrl} />
 
     <ClientRouter />
   </head>
-  <body class="text-white w-full min-w-full">
-    <div class="relative w-full">
-      <div
-        id="background-container"
-        class="fixed inset-0 z-10 h-full bg-gradient-to-br from-black to-slate-900"
-      >
-        <div class="absolute inset-0 -z-10 h-full w-full bg-slate-950">
-          <div
-            class="absolute inset-0 bg-[radial-gradient(circle_400px_at_50%_50%,#ffffff10,transparent)] animate-pulse"
-          >
-          </div><div
-            class="absolute inset-0 [background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjI1Ii8+PC9zdmc+')] opacity-50"
-          >
-          </div><div
-            class="absolute inset-0 bg-[radial-gradient(circle_600px_at_50%_50%,#4c1d9540,transparent)]"
-          >
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="relative z-10">
-      <main>
+  <body class="text-white min-h-screen min-h-[100svh] w-full min-w-full bg-slate-950">
+    <SiteBackground />
+    <div class="relative z-10 min-h-screen min-h-[100svh]">
+      <main class="min-h-screen min-h-[100svh]">
         <slot />
       </main>
     </div>

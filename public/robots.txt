@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://kevinduran.vercel.app/sitemap-index.xml 
+Sitemap: https://kevoduran.com/sitemap-index.xml

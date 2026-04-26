@@ -15,5 +15,5 @@ export default defineConfig({
     },
   },
   integrations: [lottie(), robotsTxt()],
-  site: "https://kevinduran.vercel.app/",
+  site: "https://kevoduran.com/",
 });
