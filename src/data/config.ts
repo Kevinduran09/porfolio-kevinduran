@@ -97,7 +97,7 @@ export const seoConfig = {
   siteTitle: "Kevin Duran | Portafolio - Desarrollador de software",
   siteDescription:
     "Ingeniero en sistemas de información. Contactame para convertir tus ideas en proyectos geniales. Comprometido con la calidad y soluciones escalables.",
-  siteUrl: "https://kevinduran.vercel.app/",
+  siteUrl: "https://kevoduran.com/",
   keywords: [
     "desarrollador",
     "software",

@@ -5,14 +5,25 @@
 html,
 body {
   font-family: 'Manrope', 'Rubik', 'Plus Jakarta Sans', sans-serif;
-  background: #000;
+  background: #020617;
   color: #fff;
   margin: 0;
   padding: 0;
   width: 100%;
   min-width: 100%;
   max-width: 100%;
+  min-height: 100%;
   overflow-x: hidden;
+}
+
+#background-container {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+#background-container > div {
+  transform: translateZ(0);
 }
 
 [data-aos="scale-up"] {
